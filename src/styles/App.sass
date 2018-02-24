@@ -1,0 +1,74 @@
+/* Base Application Styles */
+body 
+    color: #fff
+    background: #222
+
+.index img
+    margin: 40px auto
+    border-radius: 4px
+    background: #fff
+    display: block
+
+
+.index .notice
+    margin: 20px auto
+    padding: 15px 0
+    text-align: center
+    border: 1px solid #000
+    border-width: 1px 0
+    background: #666
+
+
+.notification-box-positioner
+    display: none
+    position: absolute
+    top: 100%
+    left: 0
+    opacity: 0
+    transition: top 0.3s ease-in-out, opacity 0.3s linear
+    -webkit-transition: top 0.3s ease-in-out, opacity 0.3s linear
+
+    &.active
+        display: block
+
+    &.visible
+        transition: top 0.3s ease-in-out, opacity 0.5s linear
+        -webkit-transition: top 0.3s ease-in-out, opacity 0.5s linear
+        top: calc(100% - 100px);
+        opacity: 1;
+
+    .notification-container 
+        padding: 10px
+
+        .notifcation-box
+            background: red
+            color: white
+            overflow: hidden
+            padding: 10px
+            border-radius: 5px
+            position: relative;
+
+            .close-notifications 
+                position: absolute
+                top: 5%
+                right: 5%
+
+            .notification-information
+                display: flex
+
+
+                .notification-icon
+                    display: inherit;
+                    height: 100px
+                    width: 100px
+
+                    img 
+                        margin: 0
+                        height: 100%
+                        width: 100%
+
+                .notification-information
+                    height: 100px
+                    display: inherit;
+                    line-height: 100px;
+                    padding: 0 10px

@@ -39,22 +39,15 @@ class NotificationBox extends React.Component {
 		let toggledValue = !this.state.isActive;
 
 		if(self.state.isActive) {
-			self.setState({ isVisible: toggledValue })			
-			setTimeout(function() { 
-				self.setState({ isActive: toggledValue })
-			}, 500)
-
+			self.setState({ isActive: toggledValue })
 		} else {
 			self.setState({ isActive: toggledValue })
-			setTimeout(function() { 
-				self.setState({ isVisible: toggledValue }) 
-			}, 200)
 		}
 	}
 
 	render() {
 		return(
-			<div className={"notification-box-positioner" + (this.state.isActive ? " active" : "") + (this.state.isVisible ? " visible" : "")}>
+			<div className={"notification-box-positioner" + (this.state.isActive ? " active" : "") }>
 				<div className={"notification-container"}>
 					<div className="notifcation-box">
 						<div className="close-notifications" onClick={this.toggleShown}>X</div>

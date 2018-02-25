@@ -20,33 +20,42 @@ body
 
 
 .notification-box-positioner
-    display: none
+    display: block
     position: absolute
-    top: 100%
+    bottom: 0
+    height: 100px
     left: 0
-    opacity: 0
-    transition: top 0.3s ease-in-out, opacity 0.3s linear
-    -webkit-transition: top 0.3s ease-in-out, opacity 0.3s linear
+    overflow: hidden
 
     &.active
-        display: block
+        .notification-container 
+        
+            .notifcation-box
+                opacity: 1
+                top: 0
 
-    &.visible
-        transition: top 0.3s ease-in-out, opacity 0.5s linear
-        -webkit-transition: top 0.3s ease-in-out, opacity 0.5s linear
-        top: calc(100% - 100px);
-        opacity: 1;
 
     .notification-container 
+        box-sizing: border-box
         padding: 10px
+        height: 100%
 
         .notifcation-box
+            box-sizing: border-box
+            height: 100%
+            position: absolute
+            top: 120%
+            left: 0
             background: red
             color: white
             overflow: hidden
             padding: 10px
             border-radius: 5px
-            position: relative;
+            position: relative
+            opacity: 0
+            transition: opacity 0.3s ease-in-out, top 0.2s ease-in-out
+            // transition-delay: 0.1s;
+            // transition-property: opacity;
 
             .close-notifications 
                 position: absolute
@@ -54,21 +63,25 @@ body
                 right: 5%
 
             .notification-information
+                height: 100%
+                box-sizing: border-box
                 display: flex
 
 
                 .notification-icon
                     display: inherit;
-                    height: 100px
-                    width: 100px
+                    height: 100%
 
                     img 
                         margin: 0
                         height: 100%
-                        width: 100%
+                        width: auto
 
                 .notification-information
-                    height: 100px
+                    height: 100%
+                    box-sizing: border-box
                     display: inherit;
-                    line-height: 100px;
-                    padding: 0 10px
+                    line-height: 100%;
+                    padding: 0 10px 0 30px
+                    align-items: center;
+                    justify-content: center;

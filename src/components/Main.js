@@ -6,23 +6,19 @@ import IconSet from './IconSet'
 
 let yeomanImage = require('../images/yeoman.png');
 
-class MultiNotificationBox  extends React.Component {
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+class NotificationBox  extends React.Component {
 
 	constructor(props) {
 		super(props);
-	}
-
-	render() {
-		return (
-			<div></div>
-		);
-	}
-}
-
-
-class NotificationBox extends React.Component {
-	constructor(props) {
-		super(props)
 
 		this.state = {
 			isActive: false,
@@ -30,76 +26,152 @@ class NotificationBox extends React.Component {
 			textContent: "content",
 		}
 
-		this.fireNotification = this.fireNotification.bind(this);
+		// this.fireNotification = this.fireNotification.bind(this);
+
 	}
-
-	fireNotification() {
-		let self = this;
-
-		self.setState({ isActive: true })
-
-		// setTimeout(function() {
-		// 	self.setState({ isActive: false })
-		// }, self.props.displayTime)
-	}
-
-	// fireNotification() {
-	// 	let self = this;
-	// 	let toggledValue = !this.state.isActive;
-
-	// 	if(self.state.isActive) {
-	// 		self.setState({ isActive: toggledValue })
-	// 	} else {
-	// 		self.setState({ isActive: toggledValue })
-	// 	}
-	// }
 
 	render() {
-		return(
-			<div className={"notification-box-positioner" + (this.state.isActive ? " active" : "") }>
-				<div className={"notification-container"}>
-					<div className="notifcation-box">
-						<div className="close-notifications">
-							{/*<svg viewPort="0 0 12 12" version="1.1"
-							     xmlns="http://www.w3.org/2000/svg">
-							    <line x1="1" y1="11" 
-							          x2="11" y2="1" 
-							          stroke="black" 
-							          stroke-width="2"/>
-							    <line x1="1" y1="1" 
-							          x2="11" y2="11" 
-							          stroke="black" 
-							          stroke-width="2"/>
-							</svg>*/}
-						</div>
-						<div className="notification-information">
-							<div className="notification-information">new email</div>
-							<div className="notification-icon">
-								<IconSet.Folder	 />
-								{/*<img src="http://via.placeholder.com/100x100" />*/}
-							</div>
+		return (
+			<div key={guid()} className={"notification-container " + this.props.extraClass}>
+				<div className={"notifcation-box "}>
+					<div className="close-notifications">
+						{/*<svg viewPort="0 0 12 12" version="1.1"
+						     xmlns="http://www.w3.org/2000/svg">
+						    <line x1="1" y1="11"
+						          x2="11" y2="1"
+						          stroke="black"
+						          stroke-width="2"/>
+						    <line x1="1" y1="1"
+						          x2="11" y2="11"
+						          stroke="black"
+						          stroke-width="2"/>
+						</svg>*/}
+					</div>
+					<div className="notification-information">
+						<div className="notification-information">{this.props.text}</div>
+						<div className="notification-icon">
+							<IconSet.Mail />
 						</div>
 					</div>
 				</div>
+			</div>
+		);
+	}
+}
+
+let counter = 0
+
+class NotificationContainer extends React.Component {
+	constructor(props) {
+		super(props)
+
+		// max number of notifications
+		// position 
+		// notification enttry method
+		//
+
+		this.state = {
+			notifications: []
+		}
+
+		this.generateNotification = this.generateNotification.bind(this);
+	}
+
+  	generateNotification(text, survivalTime, triggerFunction) {
+  		let self = this;
+  		let updatedArray = this.state.notifications;
+  		let newElementKey = guid();
+
+  		updatedArray.unshift(<NotificationBox text={counter} key={newElementKey}/>)
+  		
+  		//Animate out notification
+  		setTimeout(function() {
+	  		self.state.notifications.forEach(function(item, idx) {
+  				if(item.key == newElementKey) {
+  					// let currentNotifications = self.state.notifications;
+					// currentNotifications.splice(idx, 1);
+					// self.setState({
+					// 	notifications: currentNotifications
+					// })
+
+					var clonedElementWithMoreProps = React.cloneElement(
+					    self.state.notifications, 
+					    { extraClass: "test" }
+					);
+
+					self.setState({ notifications: currentNotifications });
+  				}
+  			})
+  		}, 1000);
+
+  		//Remove Notification DOM
+  		// setTimeout(function() {
+	  	// 	self.state.notifications.forEach(function(item, idx) {
+  		// 		if(item.key == newElementKey) {
+  		// 			// let currentNotifications = self.state.notifications;
+				// 	// currentNotifications.splice(idx, 1);
+				// 	// self.setState({
+				// 	// 	notifications: currentNotifications
+				// 	// })
+
+				// 	var clonedElementWithMoreProps = React.cloneElement(
+				// 	    self.state.notifications, 
+				// 	    { extraClass: "test" }
+				// 	);
+
+				// 	self.setState({ notifications: currentNotifications });
+  		// 		}
+  		// 	})
+  		// }, 3000);
+
+  		this.setState({ notifications: updatedArray })
+  		counter += 1;
+  	}
+
+	componentWillReceiveProps(newProps, oldProps) {
+		console.log("props: ", oldProps)
+		console.log("newprops: ", newProps)
+		// for(var i = 0; i < arrayOne.length; i++) {
+		// 	if(arrayTwo.indexOf(arrayOne[i])==-1) {
+		// 		doNotMatch.push(arrayOne[i]);
+		// 	}
+		// }
+	}
+
+	render() {
+		let displayedNotifications = this.state.notifications;
+		// displayedNotifications = displayedNotifications.reverse();
+
+
+		return(
+			<div className={"notification-box-positioner"}>
+				{displayedNotifications}
 			</div>
 		)
 	}
 }
 
 class AppComponent extends React.Component {
+  constructor(props){
+  	super(props)
+
+  	this.addNotification = this.addNotification.bind(this);
+  }
+
+  addNotification() {
+  	this.refs.notificationContainer.generateNotification("BOBOBOB")
+  }
+
   render() {
     return (
       <div className="index">
-        <img src={yeomanImage} alt="Yeoman Generator" />
-        <button onClick={() => this.refs.notification.fireNotification()}>HIT</button>
-        <NotificationBox displayTime={2000} ref="notification" />
-        <div className="notice">Please edit <code>src/components/Main.js</code> to get started!</div>
+        <button onClick={this.addNotification}>HIT</button>
+        <NotificationContainer ref="notificationContainer" position={"left"} />       
       </div>
     );
   }
 }
 
-AppComponent.defaultProps = {
-};
+AppComponent.defaultProps = {};
 
 export default AppComponent;

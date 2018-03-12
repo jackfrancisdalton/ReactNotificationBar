@@ -19,6 +19,7 @@ body
     background: #666
 
 
+
 .notification-box-positioner
     display: block
     position: absolute
@@ -26,27 +27,29 @@ body
     right: 0
     overflow: hidden
 
-    &.active
-        .notification-container 
-            .notifcation-box
-                &.fade-in
-                    transition: opacity 0.2s ease-in-out 0.1s, top 0.2s ease-in-out
-                    opacity: 1
-                    top: 0
-
-                &.slide-in
-                    transition: left 0.2s ease-in-out 0.1s, top 0.2s ease-in-out
-                    opacity: 1
-                    top: 0
-                    left: 0
-                    bottom: 0
-                    right: 0
-
-
     .notification-container 
         box-sizing: border-box
         padding: 10px
-        transition: all 0.3s ease-in-out
+        transition: all 0.7s ease-in-out
+        transition-delay: 0.2s;
+        overflow: hidden;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 100%
+
+        &.fade-enter 
+            opacity: 0;
+
+        &.fade-enter-active 
+            opacity: 1;
+            transition: opacity 300ms ease-in-out;
+
+        &.fade-leave 
+            opacity: 1;
+
+        &.fade-leave-active 
+            opacity: 0;
+            transition: opacity 300ms ease-in-out;
 
         .notifcation-box
             box-sizing: border-box
@@ -61,12 +64,6 @@ body
             border-radius: 5px
             position: relative
             transition: opacity 0.4s ease-in-out, top 0s ease-in-out 0.3s
-
-            &.fade-in
-                opacity: 0
-                
-            &.slide-in
-
 
             .close-notifications 
                 position: absolute

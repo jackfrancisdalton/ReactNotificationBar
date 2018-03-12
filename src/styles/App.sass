@@ -21,9 +21,6 @@ body
     background: #666
 
 
-
-
-
 .notification-box-positioner
     display: block
     position: absolute
@@ -48,13 +45,14 @@ body
     .notification-container 
         box-sizing: border-box
         padding: 10px
-        transition: all 0.7s ease-in-out
+        transition: all 0.3s ease-in-out
         transition-delay: 0.2s
         overflow: hidden
         padding-top: 10px
         padding-bottom: 10px
         height: 100%
         margin-top: 0
+        max-height: 100px
 
         @include fade-transition(300ms, 300ms)
         @include slide-top-transition(300ms, 300ms)
@@ -63,8 +61,7 @@ body
         @include slide-left-transition(300ms, 300ms)
         @include pop-transition(300ms, 300ms)
 
-
-        .notifcation-box
+        .notification-box
             box-sizing: border-box
             position: absolute
             top: 120%

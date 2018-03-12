@@ -16,6 +16,30 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
+
+
+class CustomNotificationBox  extends React.Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			isActive: false,
+			isVisible: false,
+			textContent: "content",
+		}
+	}
+
+	render() {
+
+		return (
+			<div className={"notification-container"}>
+				<div>BOB</div>
+			</div>
+		);
+	}
+}
+
 class NotificationBox  extends React.Component {
 
 	constructor(props) {
@@ -32,9 +56,8 @@ class NotificationBox  extends React.Component {
 	}
 
 	render() {
-
 		return (
-			<div key={guid()} className={"notification-container"}>
+			<div className={"notification-container"}>
 				<div className={"notifcation-box "}>
 					<div className="close-notifications">
 						{/*<svg viewPort="0 0 12 12" version="1.1"
@@ -61,7 +84,7 @@ class NotificationBox  extends React.Component {
 	}
 }
 
-let counter = 0
+let counter = 0;
 
 class NotificationContainer extends React.Component {
 	constructor(props) {
@@ -76,6 +99,13 @@ class NotificationContainer extends React.Component {
 		}
 
 		this.generateNotification = this.generateNotification.bind(this);
+		this.addCustomNotification = this.addCustomNotification.bind(this);
+	}
+
+
+	static defaultProps = {
+		position: "bottom-right",
+		animation: "fade"
 	}
 
   	generateNotification(text, survivalTime, triggerFunction) {
@@ -90,16 +120,41 @@ class NotificationContainer extends React.Component {
   		}
 
   		//Remove Notification DOM
-  		// setTimeout(function() {
-	  	// 	self.state.notifications.forEach(function(item, idx) {
-  		// 		if(item.key == newElementKey) {
-  		// 			let currentNotifications = self.state.notifications;
+  		setTimeout(function() {
+	  		self.state.notifications.forEach(function(item, idx) {
+  				if(item.key == newElementKey) {
+  					let currentNotifications = self.state.notifications;
+					currentNotifications.splice(idx, 1);
+					self.setState({ notifications: currentNotifications })
+  				}
+  			})
+  		}, 3000);
 
-				// 	currentNotifications.splice(idx, 1);
-				// 	self.setState({ notifications: currentNotifications })
-  		// 		}
-  		// 	})
-  		// }, 3000);
+  		this.setState({ notifications: updatedArray })
+  		counter += 1;
+  	}
+
+  	addCustomNotification(component) {
+		let self = this;
+  		let updatedArray = this.state.notifications;
+  		let newElementKey = guid();
+
+  		if(this.props.position == "top-right") {
+	  		updatedArray.push(<CustomNotificationBox key={newElementKey}/>)
+  		} else {
+	  		updatedArray.unshift(<CustomNotificationBox key={newElementKey}/>)
+  		}
+
+  		//Remove Notification DOM
+  		setTimeout(function() {
+	  		self.state.notifications.forEach(function(item, idx) {
+  				if(item.key == newElementKey) {
+  					let currentNotifications = self.state.notifications;
+					currentNotifications.splice(idx, 1);
+					self.setState({ notifications: currentNotifications })
+  				}
+  			})
+  		}, 3000);
 
   		this.setState({ notifications: updatedArray })
   		counter += 1;
@@ -111,49 +166,17 @@ class NotificationContainer extends React.Component {
   		this.setState({	notifications: updatedArray })
   	}
 
-	componentWillReceiveProps(newProps, oldProps) {
-		console.log("props: ", oldProps)
-		console.log("newprops: ", newProps)
-		// for(var i = 0; i < arrayOne.length; i++) {
-		// 	if(arrayTwo.indexOf(arrayOne[i])==-1) {
-		// 		doNotMatch.push(arrayOne[i]);
-		// 	}
-		// }
-	}
-
 	render() {
-		let displayedNotifications = this.state.notifications;
-
-		let positionClass;
-
-		switch(this.props.position) {
-			case "top-left":
-				positionClass = "top-left";
-				break;
-			case "top-right":
-				positionClass = "top-right";
-				break;
-			case "bottom-left":
-				positionClass = "bottom-left";
-				break;
-			case "bottom-left":
-				positionClass = "bottom-right";
-				break;
-			default: 
-				positionClass = "bottom-right";
-				break;
-		}
-
 		return(
-			<div className={"notification-box-positioner " + positionClass}>
+			<div className={"notification-box-positioner " + this.props.position}>
 				<CSSTransitionGroup
-					transitionName="fade"
+					transitionName={this.props.animation}
 					transitionAppear={true}
         			transitionLeave={true}
-        			transitionAppearTimeout={200}
+        			transitionAppearTimeout={100}
 					transitionEnterTimeout={300}
 					transitionLeaveTimeout={300}>
-					{displayedNotifications}
+					{this.state.notifications}
 				</CSSTransitionGroup>
 			</div>
 		)
@@ -164,10 +187,6 @@ class AppComponent extends React.Component {
   constructor(props){
   	super(props)
 
-  	this.state = {
-  		testGroup: []
-  	}
-
   	this.addNotification = this.addNotification.bind(this);
   	this.deleteNotification = this.deleteNotification.bind(this);
   }
@@ -177,7 +196,8 @@ class AppComponent extends React.Component {
   }
 
   addNotification() {
-  	this.refs.notificationContainer.generateNotification("BOBOBOB");
+  	// this.refs.notificationContainer.generateNotification("BOBOBOB");
+  	this.refs.notificationContainer.addCustomNotification(CustomNotificationBox);
   }
 
   render() {
@@ -185,7 +205,7 @@ class AppComponent extends React.Component {
       <div className="index">
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" position={"top-right"} />       
+        <NotificationContainer ref="notificationContainer"  />       
       </div>
     );
   }

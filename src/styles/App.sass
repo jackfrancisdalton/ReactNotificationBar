@@ -49,12 +49,20 @@ body
         box-sizing: border-box
         padding: 10px
         transition: all 0.7s ease-in-out
-        transition-delay: 0.2s;
-        overflow: hidden;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        transition-delay: 0.2s
+        overflow: hidden
+        padding-top: 10px
+        padding-bottom: 10px
         height: 100%
+        margin-top: 0
+
         @include fade-transition(300ms, 300ms)
+        @include slide-top-transition(300ms, 300ms)
+        @include slide-right-transition(300ms, 300ms)
+        @include slide-bottom-transition(300ms, 300ms)
+        @include slide-left-transition(300ms, 300ms)
+        @include pop-transition(300ms, 300ms)
+
 
         .notifcation-box
             box-sizing: border-box

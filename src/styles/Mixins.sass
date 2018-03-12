@@ -1,12 +1,11 @@
 @mixin fade-transition($inDuration, $outDuration) 
     &.fade-enter 
-            opacity: 0;
-            max-height: 0
+        opacity: 0;
+
 
     &.fade-enter-active 
         opacity: 1;
         transition: all 300ms ease-in-out;
-        max-height: 100px
 
     &.fade-leave 
         opacity: 1;
@@ -16,87 +15,113 @@
         transition: all 300ms ease-in-out;
 
 
-@mixin slide-bottom-right-transition($inDuration, $outDuration) 
-    &.fade-enter 
-            opacity: 0;
-            max-height: 0
+@mixin slide-top-transition($inDuration, $outDuration) 
+    &.slide-top-enter
+        margin-top: -66px
+        opacity: 0
 
-    &.fade-enter-active 
-        opacity: 1;
-        transition: all 300ms ease-in-out;
-        max-height: 100px
+    &.slide-top-enter-active
+        opacity: 1
+        margin-top: 0
+        transition: opacity 300ms ease-in-out 100ms, margin-top 300ms ease-in-out;
+        
 
-    &.fade-leave 
-        opacity: 1;
+    &.slide-top-leave 
+        opacity: 0
+        margin-top: 0        
 
-    &.fade-leave-active 
-        opacity: 0;
-        transition: all 300ms ease-in-out;
+    &.slide-top-leave-active
+        opacity: 1
+        margin-top: -66px
+        transition: opacity 300ms ease-in-out, margin-top 300ms ease-in-out  100ms;
 
-@mixin slide-bottom-left-transition($inDuration, $outDuration) 
-    &.fade-enter 
-            opacity: 0;
-            max-height: 0
 
-    &.fade-enter-active 
-        opacity: 1;
-        transition: all 300ms ease-in-out;
-        max-height: 100px
+@mixin slide-right-transition($inDuration, $outDuration) 
 
-    &.fade-leave 
-        opacity: 1;
+    &.slide-right-enter
+        opacity: 0
+        left: 100%
+        position: relative
 
-    &.fade-leave-active 
-        opacity: 0;
-        transition: all 300ms ease-in-out;
+    &.slide-right-enter-active
+        opacity: 1
+        position: relative
+        left: 0%
+        transition: opacity 300ms ease-in-out 100ms, left 300ms ease-in-out;
+        
+    &.slide-right-leave 
+        opacity: 1
+        position: relative
+        left: 0
+        
+    &.slide-right-leave-active
+        opacity: 0
+        position: relative
+        left: 100%
+        transition: opacity 300ms ease-in-out, left 300ms ease-in-out 100ms;
 
-@mixin slide-top-right-transition($inDuration, $outDuration) 
-    &.fade-enter 
-            opacity: 0;
-            max-height: 0
+@mixin slide-bottom-transition($inDuration, $outDuration) 
+    &.slide-bottom-enter
+        margin-bottom: -66px
+        opacity: 0
 
-    &.fade-enter-active 
-        opacity: 1;
-        transition: all 300ms ease-in-out;
-        max-height: 100px
+    &.slide-bottom-enter-active
+        opacity: 1
+        margin-bottom: 0
+        transition: opacity 300ms ease-in-out 100ms, margin 300ms ease-in-out;
+        
 
-    &.fade-leave 
-        opacity: 1;
+    &.slide-bottom-leave 
+        opacity: 0
+        margin-bottom: 0        
 
-    &.fade-leave-active 
-        opacity: 0;
-        transition: all 300ms ease-in-out;
+    &.slide-bottom-leave-active
+        opacity: 1
+        margin-bottom: -66px
+        transition: opacity 300ms ease-in-out, margin 300ms ease-in-out  100ms;
 
-@mixin slide-top-left-transition($inDuration, $outDuration) 
-    &.fade-enter 
-            opacity: 0;
-            max-height: 0
 
-    &.fade-enter-active 
-        opacity: 1;
-        transition: all 300ms ease-in-out;
-        max-height: 100px
+@mixin slide-left-transition($inDuration, $outDuration) 
 
-    &.fade-leave 
-        opacity: 1;
+    &.slide-left-enter
+        opacity: 0
+        right: 100%
+        position: relative
 
-    &.fade-leave-active 
-        opacity: 0;
-        transition: all 300ms ease-in-out;
+    &.slide-left-enter-active
+        opacity: 1
+        position: relative
+        right: 0%
+        transition: opacity 300ms ease-in-out 100ms, right 300ms ease-in-out;
+        
+    &.slide-left-leave 
+        opacity: 1
+        position: relative
+        right: 0
+        
+    &.slide-left-leave-active
+        opacity: 0
+        position: relative
+        left: 100%
+        right: opacity 300ms ease-in-out, right 300ms ease-in-out 100ms;
+
+
 
 @mixin pop-transition($inDuration, $outDuration) 
-    &.fade-enter 
-            opacity: 0;
-            max-height: 0
+    &.pop-enter 
+        opacity: 0
+        transform: scale(0)
 
-    &.fade-enter-active 
+    &.pop-enter-active 
         opacity: 1;
-        transition: all 300ms ease-in-out;
-        max-height: 100px
+        transition: all 200ms ease-in-out;
+        transform: scale(1);
 
-    &.fade-leave 
+    &.pop-leave 
         opacity: 1;
+        transform: scale(1);
 
-    &.fade-leave-active 
+    &.pop-leave-active 
         opacity: 0;
-        transition: all 300ms ease-in-out;
+        transform: scale(0);
+        transition: all 200ms ease-in-out;

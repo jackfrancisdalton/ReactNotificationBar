@@ -1,4 +1,6 @@
-/* Base Application Styles */
+
+@import './Mixins'
+
 body 
     color: #fff
     background: #222
@@ -20,12 +22,28 @@ body
 
 
 
+
+
 .notification-box-positioner
     display: block
     position: absolute
-    bottom: 0
-    right: 0
     overflow: hidden
+
+    &.top-left
+        top: 0
+        left: 0
+
+    &.top-right
+        top: 0
+        right: 0
+    
+    &.bottom-left
+        bottom: 0
+        left: 0
+
+    &.bottom-right
+        bottom: 0
+        right: 0
 
     .notification-container 
         box-sizing: border-box
@@ -36,20 +54,7 @@ body
         padding-top: 10px;
         padding-bottom: 10px;
         height: 100%
-
-        &.fade-enter 
-            opacity: 0;
-
-        &.fade-enter-active 
-            opacity: 1;
-            transition: opacity 300ms ease-in-out;
-
-        &.fade-leave 
-            opacity: 1;
-
-        &.fade-leave-active 
-            opacity: 0;
-            transition: opacity 300ms ease-in-out;
+        @include fade-transition(300ms, 300ms)
 
         .notifcation-box
             box-sizing: border-box

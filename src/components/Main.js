@@ -83,19 +83,23 @@ class NotificationContainer extends React.Component {
   		let updatedArray = this.state.notifications;
   		let newElementKey = guid();
 
-  		updatedArray.unshift(<NotificationBox text={counter} key={newElementKey}/>)
+  		if(this.props.position == "top-right") {
+	  		updatedArray.push(<NotificationBox text={counter} key={newElementKey}/>)
+  		} else {
+	  		updatedArray.unshift(<NotificationBox text={counter} key={newElementKey}/>)
+  		}
 
   		//Remove Notification DOM
-  		setTimeout(function() {
-	  		self.state.notifications.forEach(function(item, idx) {
-  				if(item.key == newElementKey) {
-  					let currentNotifications = self.state.notifications;
+  		// setTimeout(function() {
+	  	// 	self.state.notifications.forEach(function(item, idx) {
+  		// 		if(item.key == newElementKey) {
+  		// 			let currentNotifications = self.state.notifications;
 
-					currentNotifications.splice(idx, 1);
-					self.setState({ notifications: currentNotifications })
-  				}
-  			})
-  		}, 3000);
+				// 	currentNotifications.splice(idx, 1);
+				// 	self.setState({ notifications: currentNotifications })
+  		// 		}
+  		// 	})
+  		// }, 3000);
 
   		this.setState({ notifications: updatedArray })
   		counter += 1;
@@ -119,7 +123,6 @@ class NotificationContainer extends React.Component {
 
 	render() {
 		let displayedNotifications = this.state.notifications;
-		// displayedNotifications = displayedNotifications.reverse();
 
 		let positionClass;
 
@@ -182,7 +185,7 @@ class AppComponent extends React.Component {
       <div className="index">
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" position={"left"} />       
+        <NotificationContainer ref="notificationContainer" position={"top-right"} />       
       </div>
     );
   }

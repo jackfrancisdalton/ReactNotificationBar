@@ -114,7 +114,7 @@ class NotificationContainer extends React.Component {
   		let updatedArray = this.state.notifications;
 
   		// add new notification to stack
-  		if(this.props.addStructure == "stack") {
+  		if(this.props.reverseAppenedOrder == true) {
 	  		updatedArray.push(<NotificationBox text={message} key={key}/>)
   		} else {
 	  		updatedArray.unshift(<NotificationBox text={message} key={key}/>)
@@ -152,7 +152,7 @@ class NotificationContainer extends React.Component {
 		);
 
   		// Pushes the notification to the top or bottom depending on position
-  		if(this.props.addStructure == "stack") {
+  		if(this.props.reverseAppenedOrder == true) {
 	  		updatedArray.push(customCompWithKey)
   		} else {
 	  		updatedArray.unshift(customCompWithKey)
@@ -196,8 +196,8 @@ class NotificationContainer extends React.Component {
 					transitionAppear={true}
         			transitionLeave={true}
         			transitionAppearTimeout={100}
-					transitionEnterTimeout={2000}
-					transitionLeaveTimeout={800}>
+					transitionEnterTimeout={600}
+					transitionLeaveTimeout={600}>
 					{this.state.notifications}
 				</CSSTransitionGroup>
 			</div>
@@ -232,7 +232,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" addStructure={"stack"} animation={"fade"} />       
+        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={true} animation={"fade"} />       
       </div>
     );
   }

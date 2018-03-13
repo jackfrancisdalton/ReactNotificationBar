@@ -88,10 +88,6 @@ class NotificationContainer extends React.Component {
 	constructor(props) {
 		super(props)
 
-		// max number of notifications
-		// position 
-		// notification enttry method
-
 		this.state = {
 			notifications: [],
 		}
@@ -101,23 +97,30 @@ class NotificationContainer extends React.Component {
 	}
 
 
+	// Assign Default Properties
 	static defaultProps = {
-		position: "top-right",
-		animation: "slide-right",
+		position: "bottom-right",
+		animation: "slide-left",
 		addTo: "top",
+		// max number of notifications
+		// position 
+		// notification enttry method
 	}
 
+
+	// Creates A notification and pushes it to the stack
   	generateNotification(key, message, survivalTime, triggerFunction) {
   		let self = this;
   		let updatedArray = this.state.notifications;
 
-  		if(this.props.position == "top-right") {
+  		// add new notification to stack
+  		if(this.props.addStructure == "stack") {
 	  		updatedArray.push(<NotificationBox text={message} key={key}/>)
   		} else {
 	  		updatedArray.unshift(<NotificationBox text={message} key={key}/>)
   		}
 
-  		//Remove Notification DOM
+  		// Initialise timeout for removing notification if surivival time is supplied
   		if(survivalTime){
   			setTimeout(function() {
 		  		self.state.notifications.forEach(function(item, idx) {
@@ -130,15 +133,16 @@ class NotificationContainer extends React.Component {
 	  		}, survivalTime);
   		}
   		
-
   		this.setState({ notifications: updatedArray })
   	}
 
+	// Creates A custom notification and pushes it to the stack
   	addCustomNotification(customComponent, key, survivalTime) {
 		let self = this;
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key;
 
+  		// if a key isn't supplied, generate a GUID and assign it
   		if(!keyToAssign) 
   			keyToAssign = guid() 
 
@@ -147,23 +151,25 @@ class NotificationContainer extends React.Component {
 			{ key: keyToAssign}
 		);
 
-  		if(this.props.position == "top-right")
+  		// Pushes the notification to the top or bottom depending on position
+  		if(this.props.addStructure == "stack") {
 	  		updatedArray.push(customCompWithKey)
-  		else
+  		} else {
 	  		updatedArray.unshift(customCompWithKey)
+  		}
 
-  		//Remove Notification DOM
-  		// if(survivalTime) {
-  		// 	setTimeout(function() {
-		  // 		self.state.notifications.forEach(function(item, idx) {
-	  	// 			if(item.key == key) {
-	  	// 				let currentNotifications = self.state.notifications;
-				// 		currentNotifications.splice(idx, 1);
-				// 		self.setState({ notifications: currentNotifications })
-	  	// 			}
-	  	// 		})
-	  	// 	}, survivalTime);
-  		// }
+  		// Initialise timeout for removing notification if surivival time is supplied
+  		if(survivalTime) {
+  			setTimeout(function() {
+		  		self.state.notifications.forEach(function(item, idx) {
+	  				if(item.key == key) {
+	  					let currentNotifications = self.state.notifications;
+						currentNotifications.splice(idx, 1);
+						self.setState({ notifications: currentNotifications })
+	  				}
+	  			})
+	  		}, survivalTime);
+  		}
 
   		this.setState({ notifications: updatedArray })
   	}
@@ -182,8 +188,6 @@ class NotificationContainer extends React.Component {
   		})
   	}
 
-
-
 	render() {
 		return(
 			<div className={"notification-box-positioner " + this.props.position}>
@@ -192,8 +196,8 @@ class NotificationContainer extends React.Component {
 					transitionAppear={true}
         			transitionLeave={true}
         			transitionAppearTimeout={100}
-					transitionEnterTimeout={400}
-					transitionLeaveTimeout={2000}>
+					transitionEnterTimeout={2000}
+					transitionLeaveTimeout={800}>
 					{this.state.notifications}
 				</CSSTransitionGroup>
 			</div>
@@ -228,7 +232,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer"  />       
+        <NotificationContainer ref="notificationContainer" addStructure={"stack"} animation={"fade"} />       
       </div>
     );
   }

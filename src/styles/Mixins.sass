@@ -1,10 +1,18 @@
 @mixin fade-transition($inDuration, $outDuration) 
     &.fade-enter 
+        max-height: 0
+        padding-bottom: 0
+        padding-top: 0
+        padding-left: 10px;
+        padding-right: 10px;
         opacity: 0;
 
     &.fade-enter-active 
         opacity: 1;
-        transition: all 400ms ease-in-out;
+        padding: 10px;
+        max-height: 100px;
+        transition: opacity 400ms ease-in-out 400ms, max-height 400ms ease-in-out, margin 400ms ease-in-out, padding 400ms ease-in-out;
+
 
     &.fade-leave 
         opacity: 1;

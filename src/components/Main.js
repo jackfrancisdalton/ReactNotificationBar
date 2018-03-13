@@ -100,11 +100,8 @@ class NotificationContainer extends React.Component {
 	// Assign Default Properties
 	static defaultProps = {
 		position: "bottom-right",
-		animation: "slide-left",
-		addTo: "top",
-		// max number of notifications
-		// position 
-		// notification enttry method
+		animation: "slide-top",
+		reverseAppenedOrder: false,
 	}
 
 
@@ -189,10 +186,16 @@ class NotificationContainer extends React.Component {
   	}
 
 	render() {
+		console.log(this.props.enterAnimation)
+		console.log(this.props.exitAnimation)
 		return(
 			<div className={"notification-box-positioner " + this.props.position}>
 				<CSSTransitionGroup
-					transitionName={this.props.animation}
+					transitionName={ { 
+						enter: this.props.enterAnimation + "-enter",
+						leave: this.props.exitAnimation + "-leave",
+						appear: this.props.enterAnimation + "-enter"
+					} }
 					transitionAppear={true}
         			transitionLeave={true}
         			transitionAppearTimeout={100}
@@ -232,7 +235,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={true} animation={"fade"} />       
+        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={false} enterAnimation={"slide-right"}  exitAnimation={"pop"}/>       
       </div>
     );
   }

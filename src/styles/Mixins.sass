@@ -1,4 +1,4 @@
-@mixin fade-transition($inDuration, $outDuration) 
+@mixin fade-transition($inDuration, $outDuration, $padding) 
     $slideTime: ($inDuration / 2)
     $fadeInTime: ($inDuration / 2)
 
@@ -6,16 +6,15 @@
         max-height: 0
         padding-bottom: 0
         padding-top: 0
-        padding-left: 10px
-        padding-right: 10px
+        padding-left: $padding
+        padding-right: $padding
         opacity: 0
 
     &.fade-enter-active 
         opacity: 1;
-        padding: 10px;
-        max-height: 100px;
+        padding: $padding
+        max-height: 100px
         transition: opacity $fadeInTime ease-in-out $slideTime, max-height $slideTime ease-in-out, margin $slideTime ease-in-out,  padding $slideTime ease-in-out
-
 
     &.fade-leave 
         opacity: 1;
@@ -26,7 +25,6 @@
         padding-bottom: 0
         padding-top: 0
         transition: opacity  $outDuration ease-in-out, max-height $slideTime ease-in-out $outDuration, margin $slideTime ease-in-out $outDuration, padding $slideTime ease-in-out $outDuration;
-
 
 
 @mixin slide-top-transition($inDuration, $outDuration) 

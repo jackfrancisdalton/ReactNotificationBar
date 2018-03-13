@@ -44,17 +44,15 @@ body
 
     .notification-container 
         box-sizing: border-box
-        padding: 10px
+        padding: 0 10px 10px 10px
         transition: all 0.3s ease-in-out
         transition-delay: 0.2s
         overflow: hidden
-        // padding-top: 10px
-        // padding-bottom: 10px
         height: 100%
         margin-top: 0
         max-height: 100px
 
-        @include fade-transition(300ms, 300ms)
+        @include fade-transition(300ms, 300ms, 10px)
         @include slide-top-transition(300ms, 300ms)
         @include slide-right-transition(300ms, 300ms)
         @include slide-bottom-transition(300ms, 300ms)

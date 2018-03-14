@@ -1,5 +1,5 @@
-require('normalize.css/normalize.css');
-require('styles/App.sass');
+import normalize from 'normalize.css/normalize.css';
+import style from 'styles/App.sass';
 
 import { CSSTransitionGroup } from 'react-transition-group'
 import React from 'react';
@@ -33,7 +33,7 @@ class CustomNotificationBox  extends React.Component {
 	render() {
 
 		return (
-			<div className={"notification-container"}>
+			<div className={"notification-container"} style={{ display: "block", background: "blue" }}>
 				<div>BOB</div>
 			</div>
 		);
@@ -57,8 +57,8 @@ class NotificationBox  extends React.Component {
 
 	render() {
 		return (
-			<div className={"notification-container"}>
-				<div className={"notification-box "}>
+			<div>
+				<div className={"notification-box"}>
 					<div className="close-notifications">
 						{/*<svg viewPort="0 0 12 12" version="1.1"
 						     xmlns="http://www.w3.org/2000/svg">
@@ -107,24 +107,24 @@ class NotificationContainer extends React.Component {
 
 	// Creates A notification and pushes it to the stack
   	generateNotification(key, message, survivalTime, triggerFunction) {
-  		let self = this;
   		let updatedArray = this.state.notifications;
+  		let DOM = <div className={"notification-container"} key={key}><NotificationBox text={message}/></div>
 
   		// add new notification to stack
   		if(this.props.reverseAppenedOrder == true) {
-	  		updatedArray.push(<NotificationBox text={message} key={key}/>)
+	  		updatedArray.push(DOM)
   		} else {
-	  		updatedArray.unshift(<NotificationBox text={message} key={key}/>)
+	  		updatedArray.unshift(DOM)
   		}
 
   		// Initialise timeout for removing notification if surivival time is supplied
   		if(survivalTime){
-  			setTimeout(function() {
-		  		self.state.notifications.forEach(function(item, idx) {
+  			setTimeout(() => {
+		  		this.state.notifications.forEach((item, idx) => {
 	  				if(item.key == key) {
-	  					let currentNotifications = self.state.notifications;
+	  					let currentNotifications = this.state.notifications;
 						currentNotifications.splice(idx, 1);
-						self.setState({ notifications: currentNotifications })
+						this.setState({ notifications: currentNotifications })
 	  				}
 	  			})
 	  		}, survivalTime);
@@ -135,34 +135,25 @@ class NotificationContainer extends React.Component {
 
 	// Creates A custom notification and pushes it to the stack
   	addCustomNotification(customComponent, key, survivalTime) {
-		let self = this;
   		let updatedArray = this.state.notifications;
-  		let keyToAssign = key;
-
-  		// if a key isn't supplied, generate a GUID and assign it
-  		if(!keyToAssign) 
-  			keyToAssign = guid() 
-
-  		let customCompWithKey = React.cloneElement(
-			customComponent, 
-			{ key: keyToAssign}
-		);
+  		let keyToAssign = key ? key : guid();
+  		let DOM = <div className={"notification-container"} key={keyToAssign}>{customComponent}</div>
 
   		// Pushes the notification to the top or bottom depending on position
   		if(this.props.reverseAppenedOrder == true) {
-	  		updatedArray.push(customCompWithKey)
+	  		updatedArray.push(DOM)
   		} else {
-	  		updatedArray.unshift(customCompWithKey)
+	  		updatedArray.unshift(DOM)
   		}
 
   		// Initialise timeout for removing notification if surivival time is supplied
   		if(survivalTime) {
-  			setTimeout(function() {
-		  		self.state.notifications.forEach(function(item, idx) {
+  			setTimeout(() => {
+		  		this.state.notifications.forEach((item, idx) => {
 	  				if(item.key == key) {
-	  					let currentNotifications = self.state.notifications;
+	  					let currentNotifications = this.state.notifications;
 						currentNotifications.splice(idx, 1);
-						self.setState({ notifications: currentNotifications })
+						this.setState({ notifications: currentNotifications })
 	  				}
 	  			})
 	  		}, survivalTime);
@@ -236,7 +227,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={true} enterAnimation={"slide-top"}  leaveAnimation={"slide-bottom"}/>       
+        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={false} enterAnimation={"pop"}  leaveAnimation={"pop"}/>       
       </div>
     );
   }

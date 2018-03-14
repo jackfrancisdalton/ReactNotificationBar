@@ -20,6 +20,13 @@ class NotificationBox  extends React.Component {
 			isVisible: false,
 			textContent: "content",
 		}
+
+		this.onClickNotification = this.onClickNotification.bind(this);
+	}
+
+	onClickNotification(value) {
+		console.log("TEST")
+		this.props.onClick();
 	}
 
 	render() {
@@ -62,7 +69,7 @@ class NotificationBox  extends React.Component {
 		}
 
 		return (
-			<div>
+			<div onClick={() => this.onClickNotification()}>
 				<div className={"notification-box"}>
 					<div className="close-notifications">
 						{/*<svg viewPort="0 0 12 12" version="1.1"
@@ -121,9 +128,12 @@ class NotificationContainer extends React.Component {
   	generateNotification(key, message, onClick, icon, survivalTime) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
+
   		let DOM = (
   			<div className={"notification-container"} key={keyToAssign}>
-  				<NotificationBox text={message} onClick={this.onClick} icon={icon} />
+  				<NotificationBox text={message} 
+  						onClick={() => onClick(keyToAssign)} 
+  						icon={icon} />
   			</div>
   		)
 

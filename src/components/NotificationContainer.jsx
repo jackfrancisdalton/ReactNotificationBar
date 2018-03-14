@@ -125,24 +125,22 @@ class NotificationContainer extends React.Component {
 	}
 
 	// Creates A notification and pushes it to the stack
-  	generateNotification(key, message, onClick, icon, survivalTime) {
+  	generateNotification(key, message, icon, survivalTime, onClick, onClickObject) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
+  		if(!onClick) {
+  			onClick = function() {}
+  		}
 
   		let DOM = (
   			<div className={"notification-container"} key={keyToAssign}>
-  				<NotificationBox text={message} 
-  						onClick={() => onClick(keyToAssign)} 
-  						icon={icon} />
-  			</div>
-  		)
+	  			<NotificationBox text={message} onClick={() => onClick(keyToAssign, onClickObject)} icon={icon} />
+	  		</div>
+	  	)
 
   		// add new notification to stack
-  		if(this.props.reverseAppenedOrder == true) {
-	  		updatedArray.push(DOM)
-  		} else {
-	  		updatedArray.unshift(DOM)
-  		}
+  		this.props.reverseAppenedOrder == true ? updatedArray.push(DOM) : updatedArray.unshift(DOM)
+  		this.setState({ notifications: updatedArray })
 
   		// Initialise timeout for removing notification if surivival time is supplied
   		if(survivalTime){
@@ -156,22 +154,25 @@ class NotificationContainer extends React.Component {
 	  			})
 	  		}, survivalTime);
   		}
-
-  		this.setState({ notifications: updatedArray })
   	}
 
 	// Creates A custom notification and pushes it to the stack
-  	addCustomNotification(key, customComponent, survivalTime) {
+  	addCustomNotification(key, customComponent, survivalTime, onClick, onClickObject) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
-  		let DOM = <div className={"notification-container"} key={keyToAssign}>{customComponent}</div>
+  		if(!onClick) {
+  			onClick = function() {}
+  		}
+
+  		let DOM = (
+  			<div className={"notification-container"} onClick={() => onClick(keyToAssign, onClickObject)} key={keyToAssign}>
+  				{customComponent}
+  			</div>
+  		);
 
   		// Pushes the notification to the top or bottom depending on position
-  		if(this.props.reverseAppenedOrder == true) {
-	  		updatedArray.push(DOM)
-  		} else {
-	  		updatedArray.unshift(DOM)
-  		}
+  		(this.props.reverseAppenedOrder == true) ? updatedArray.push(DOM) : updatedArray.unshift(DOM)	  		
+  		this.setState({ notifications: updatedArray })
 
   		// Initialise timeout for removing notification if surivival time is supplied
   		if(survivalTime) {
@@ -185,8 +186,6 @@ class NotificationContainer extends React.Component {
 	  			})
 	  		}, survivalTime);
   		}
-
-  		this.setState({ notifications: updatedArray })
   	}
 
   	removeByKey(targetKey) {

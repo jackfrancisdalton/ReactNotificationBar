@@ -47,16 +47,21 @@ class AppComponent extends React.Component {
   }
 
   addNotification() {
-  	let self = this;
-  	let onClickFunc = function(key) {
-  		self.refs.notificationContainer.removeByKey(key)
+  	let onClickFunc = (key, obj) => {
+  		console.log("PRINT: ", obj)
+  		this.refs.notificationContainer.removeByKey(key)
   	}
 
-  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", onClickFunc, "check", null);
+  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", "check", null, onClickFunc, {data: "TEST"});
   }
 
   addCustomNotification() {
-  	this.refs.notificationContainer.addCustomNotification(guid(), <CustomNotificationBox />, null);
+  	let onClickFunc = (key, obj ) => {
+  		console.log("PRINT: ", obj)
+  		this.refs.notificationContainer.removeByKey(key)
+  	}
+
+  	this.refs.notificationContainer.addCustomNotification(guid(), <CustomNotificationBox />, null, onClickFunc, { data: "TEST"});
   }
 
   render() {

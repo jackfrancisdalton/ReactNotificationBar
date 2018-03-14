@@ -23,6 +23,44 @@ class NotificationBox  extends React.Component {
 	}
 
 	render() {
+		let icon;
+
+		switch(this.props.icon) {
+			case "Share":
+				icon = <IconSet.Share />
+				break;
+			case "person":
+				icon = <IconSet.Person />
+				break;
+			case "notification":
+				icon = <IconSet.Notification />
+				break;
+			case "check":
+				icon = <IconSet.Check />
+				break;
+			case "folder":
+				icon = <IconSet.Folder />
+				break;
+			case "ShoppingCart":
+				icon = <IconSet.ShoppingCart />
+				break;
+			case "alarm":
+				icon = <IconSet.Alarm />
+				break;
+			case "mail":
+				icon = <IconSet.Mail />
+				break;
+			case "attach-horz":
+				icon = <IconSet.AttachmentHorizontal />
+				break;
+			case "attach-vert":
+				icon = <IconSet.AttchmentVerticle />
+				break;
+			default: 
+				icon = <IconSet.Notification />
+				break;
+		}
+
 		return (
 			<div>
 				<div className={"notification-box"}>
@@ -42,7 +80,7 @@ class NotificationBox  extends React.Component {
 					<div className="notification-information">
 						<div className="notification-information">{this.props.text}</div>
 						<div className="notification-icon">
-							<IconSet.Mail />
+							{icon}
 						</div>
 					</div>
 				</div>
@@ -74,13 +112,20 @@ class NotificationContainer extends React.Component {
 		
 		leaveAnimation: "fade",
         leaveAnimationTime: 1000,
+
+        customIcon: null,
+        icon: null,
 	}
 
 	// Creates A notification and pushes it to the stack
-  	generateNotification(key, message, onClick, survivalTime) {
+  	generateNotification(key, message, onClick, icon, survivalTime) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
-  		let DOM = <div className={"notification-container"} key={keyToAssign}><NotificationBox text={message} onClick={this.onClick} /></div>
+  		let DOM = (
+  			<div className={"notification-container"} key={keyToAssign}>
+  				<NotificationBox text={message} onClick={this.onClick} icon={icon} />
+  			</div>
+  		)
 
   		// add new notification to stack
   		if(this.props.reverseAppenedOrder == true) {

@@ -47,7 +47,7 @@ class AppComponent extends React.Component {
   }
 
   addNotification() {
-  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", null, null);
+  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", null, "check", null);
   }
 
   addCustomNotification() {
@@ -60,7 +60,10 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" />       
+        <NotificationContainer 
+        		ref="notificationContainer"
+        		enterAnimation={"slide-right"} 
+        		position={"top-right"}/>       
       </div>
     );
   }

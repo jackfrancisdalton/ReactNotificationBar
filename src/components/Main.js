@@ -236,7 +236,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={false} enterAnimation={"slide-right"}  leaveAnimation={"pop"}/>       
+        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={true} enterAnimation={"slide-top"}  leaveAnimation={"slide-bottom"}/>       
       </div>
     );
   }

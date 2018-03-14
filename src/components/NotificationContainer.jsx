@@ -1,11 +1,6 @@
-import normalize from 'normalize.css/normalize.css';
-import style from 'styles/App.sass';
-
-import { CSSTransitionGroup } from 'react-transition-group'
 import React from 'react';
 import IconSet from './IconSet'
-
-let yeomanImage = require('../images/yeoman.png');
+import { CSSTransitionGroup } from 'react-transition-group'
 
 function guid() {
   function s4() {
@@ -16,32 +11,7 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-
-
-class CustomNotificationBox  extends React.Component {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			isActive: false,
-			isVisible: false,
-			textContent: "content",
-		}
-	}
-
-	render() {
-
-		return (
-			<div className={"notification-container"} style={{ display: "block", background: "blue" }}>
-				<div>BOB</div>
-			</div>
-		);
-	}
-}
-
 class NotificationBox  extends React.Component {
-
 	constructor(props) {
 		super(props);
 
@@ -50,9 +20,6 @@ class NotificationBox  extends React.Component {
 			isVisible: false,
 			textContent: "content",
 		}
-
-		// this.fireNotification = this.fireNotification.bind(this);
-
 	}
 
 	render() {
@@ -108,7 +75,6 @@ class NotificationContainer extends React.Component {
 		leaveAnimation: "fade",
         leaveAnimationTime: 1000,
 	}
-
 
 	// Creates A notification and pushes it to the stack
   	generateNotification(key, message, onClick, survivalTime) {
@@ -201,21 +167,18 @@ class NotificationContainer extends React.Component {
   	}
 
   	getNotifications() {
-  		return this.state.notifications.length
+  		return this.state.notifications
   	}
 
 	render() {
-		let enterAnimation = this.props.enterAnimation
-		let leaveAnimation = this.props.leaveAnimation
-
 		return(
 			<div className={"notification-box-positioner " + this.props.position}>
 				<CSSTransitionGroup
-					transitionName={ { 
-						enter: enterAnimation + "-enter",
-						leave: leaveAnimation + "-leave",
-						appear: enterAnimation + "-enter"
-					} }
+					transitionName={{ 
+						enter: this.props.enterAnimation + "-enter",
+						leave: this.props.leaveAnimation + "-leave",
+						appear: this.props.enterAnimation + "-enter"
+					}}
         			transitionLeave={true}
 					transitionEnterTimeout={this.props.enterAnimationTime}
 					transitionLeaveTimeout={this.props.leaveAnimationTime}>
@@ -226,43 +189,4 @@ class NotificationContainer extends React.Component {
 	}
 }
 
-let counter = 0;
-
-class AppComponent extends React.Component {
-  constructor(props){
-  	super(props)
-
-  	this.addNotification = this.addNotification.bind(this);
-  	this.addCustomNotification = this.addCustomNotification.bind(this);
-  	this.deleteNotification = this.deleteNotification.bind(this);
-  }
-
-  deleteNotification() {
-  	this.refs.notificationContainer.removeFromEnd();
-  }
-
-  addNotification() {
-  	// this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", null, null);
-  	this.refs.notificationContainer.generateNotification(counter, "Hey man how is it going", null, null);
-  	counter++;
-  }
-
-  addCustomNotification() {
-  	this.refs.notificationContainer.addCustomNotification(guid(), <CustomNotificationBox />, null);
-  }
-
-  render() {
-    return (
-      <div className="index">
-        <button onClick={this.addNotification}>add</button>
-        <button onClick={this.addCustomNotification}>add custom</button>
-        <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" />       
-      </div>
-    );
-  }
-}
-
-AppComponent.defaultProps = {};
-
-export default AppComponent;
+export { NotificationContainer }

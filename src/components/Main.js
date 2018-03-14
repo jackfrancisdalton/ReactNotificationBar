@@ -129,7 +129,7 @@ class NotificationContainer extends React.Component {
 	  			})
 	  		}, survivalTime);
   		}
-  		
+
   		this.setState({ notifications: updatedArray })
   	}
 
@@ -186,21 +186,22 @@ class NotificationContainer extends React.Component {
   	}
 
 	render() {
-		console.log(this.props.enterAnimation)
-		console.log(this.props.exitAnimation)
+		let enterAnimation = this.props.enterAnimation
+		let leaveAnimation = this.props.leaveAnimation
+
 		return(
 			<div className={"notification-box-positioner " + this.props.position}>
 				<CSSTransitionGroup
 					transitionName={ { 
-						enter: this.props.enterAnimation + "-enter",
-						leave: this.props.exitAnimation + "-leave",
-						appear: this.props.enterAnimation + "-enter"
+						enter: enterAnimation + "-enter",
+						leave: leaveAnimation + "-leave",
+						appear: enterAnimation + "-enter"
 					} }
 					transitionAppear={true}
         			transitionLeave={true}
         			transitionAppearTimeout={100}
-					transitionEnterTimeout={600}
-					transitionLeaveTimeout={600}>
+					transitionEnterTimeout={800}
+					transitionLeaveTimeout={800}>
 					{this.state.notifications}
 				</CSSTransitionGroup>
 			</div>
@@ -235,7 +236,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={false} enterAnimation={"slide-right"}  exitAnimation={"pop"}/>       
+        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={false} enterAnimation={"slide-right"}  leaveAnimation={"pop"}/>       
       </div>
     );
   }

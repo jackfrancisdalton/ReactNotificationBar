@@ -25,7 +25,6 @@ class NotificationBox  extends React.Component {
 	}
 
 	onClickNotification(value) {
-		console.log("TEST")
 		this.props.onClick();
 	}
 
@@ -71,25 +70,24 @@ class NotificationBox  extends React.Component {
 		return (
 			<div onClick={() => this.onClickNotification()}>
 				<div className={"notification-box"}>
-					<div className="close-notifications">
-						{/*<svg viewPort="0 0 12 12" version="1.1"
-						     xmlns="http://www.w3.org/2000/svg">
-						    <line x1="1" y1="11"
-						          x2="11" y2="1"
-						          stroke="black"
-						          stroke-width="2"/>
-						    <line x1="1" y1="1"
-						          x2="11" y2="11"
-						          stroke="black"
-						          stroke-width="2"/>
-						</svg>*/}
-					</div>
-					<div className="notification-information">
-						<div className="notification-information">{this.props.text}</div>
-						<div className="notification-icon">
-							{icon}
-						</div>
-					</div>
+					<table>
+						<tr>
+							<td className="left-box">{this.props.text}</td>
+							<td className="middle-box">{icon}</td>
+							{/*<td className="right-box">
+								<svg viewPort="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg">
+								    <line x1="1" y1="11"
+								          x2="11" y2="1"
+								          stroke="black"
+								          stroke-width="2"/>
+								    <line x1="1" y1="1"
+								          x2="11" y2="11"
+								          stroke="black"
+								          stroke-width="2"/>
+								</svg>
+							</td>*/}
+						</tr>
+					</table>
 				</div>
 			</div>
 		);
@@ -235,7 +233,7 @@ class NotificationContainer extends React.Component {
 					}}
         			transitionLeave={true}
 					transitionEnterTimeout={this.props.enterAnimationTime}
-					transitionLeaveTimeout={this.props.leaveAnimationTime}>
+					transitionLeaveTimeout={this.props.leaveAnimationTime} >
 					{this.state.notifications}
 				</CSSTransitionGroup>
 			</div>

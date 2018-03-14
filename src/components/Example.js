@@ -26,7 +26,7 @@ class CustomNotificationBox  extends React.Component {
 
 	render() {
 		return (
-			<div className={"notification-container"} style={{ display: "block", background: "blue" }}>
+			<div className={"notification-container"} style={{ padding: "50px", display: "block", background: "blue" }}>
 				<div>BOB</div>
 			</div>
 		);
@@ -47,20 +47,12 @@ class AppComponent extends React.Component {
   }
 
   addNotification() {
-  	let onClickFunc = (key, obj) => {
-  		console.log("PRINT: ", obj)
-  		this.refs.notificationContainer.removeByKey(key)
-  	}
-
-  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", "check", null, onClickFunc, {data: "TEST"});
+  	let onClickFunc = (key, obj) =>  this.refs.notificationContainer.removeByKey(key)
+  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going asdasd okas dkasodk pasokdapks doaskd paskd ask", "check", null, onClickFunc, {data: "TEST"});
   }
 
   addCustomNotification() {
-  	let onClickFunc = (key, obj ) => {
-  		console.log("PRINT: ", obj)
-  		this.refs.notificationContainer.removeByKey(key)
-  	}
-
+  	let onClickFunc = (key, obj ) => this.refs.notificationContainer.removeByKey(key)
   	this.refs.notificationContainer.addCustomNotification(guid(), <CustomNotificationBox />, null, onClickFunc, { data: "TEST"});
   }
 

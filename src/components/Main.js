@@ -100,15 +100,21 @@ class NotificationContainer extends React.Component {
 	// Assign Default Properties
 	static defaultProps = {
 		position: "bottom-right",
-		animation: "slide-top",
 		reverseAppenedOrder: false,
+		
+		enterAnimation: "fade",
+        enterAnimationTime: 1000,
+		
+		leaveAnimation: "fade",
+        leaveAnimationTime: 1000,
 	}
 
 
 	// Creates A notification and pushes it to the stack
-  	generateNotification(key, message, survivalTime, triggerFunction) {
+  	generateNotification(key, message, onClick, survivalTime) {
   		let updatedArray = this.state.notifications;
-  		let DOM = <div className={"notification-container"} key={key}><NotificationBox text={message}/></div>
+  		let keyToAssign = key ? key : guid();
+  		let DOM = <div className={"notification-container"} key={keyToAssign}><NotificationBox text={message} onClick={this.onClick} /></div>
 
   		// add new notification to stack
   		if(this.props.reverseAppenedOrder == true) {
@@ -134,7 +140,7 @@ class NotificationContainer extends React.Component {
   	}
 
 	// Creates A custom notification and pushes it to the stack
-  	addCustomNotification(customComponent, key, survivalTime) {
+  	addCustomNotification(key, customComponent, survivalTime) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
   		let DOM = <div className={"notification-container"} key={keyToAssign}>{customComponent}</div>
@@ -163,17 +169,39 @@ class NotificationContainer extends React.Component {
   	}
 
   	removeByKey(targetKey) {
-  		this.state.notifications.forEach(function(item, idx) {
-  			if(item.key === targetKey) {
-  				
+  		this.state.notifications.forEach((item, idx) => {
+  			if(item.key === targetKey.toString()) {
   				let currentNotifications = this.state.notifications
   				currentNotifications.splice(idx, 1)
-
-  				this.setState({
-  					notifications: currentNotifications
-  				})
+  				this.setState({ notifications: currentNotifications })
   			}
   		})
+  	}
+
+  	removeByIndex(targetIdx) {
+  		this.state.notifications.forEach((item, idx) => {
+  			if(idx === targetIdx) {
+  				let currentNotifications = this.state.notifications
+  				currentNotifications.splice(idx, 1)
+  				this.setState({ notifications: currentNotifications })
+  			}
+  		})
+  	}
+
+  	removeFromEnd() {
+  		let currentNotifications = this.state.notifications
+		currentNotifications.splice((this.state.notifications.length - 1), 1)
+		this.setState({ notifications: currentNotifications })
+  	}
+
+  	removeFromFront() {
+		let currentNotifications = this.state.notifications
+		currentNotifications.splice(0, 1)
+		this.setState({ notifications: currentNotifications })
+  	}
+
+  	getNotifications() {
+  		return this.state.notifications.length
   	}
 
 	render() {
@@ -188,17 +216,17 @@ class NotificationContainer extends React.Component {
 						leave: leaveAnimation + "-leave",
 						appear: enterAnimation + "-enter"
 					} }
-					transitionAppear={true}
         			transitionLeave={true}
-        			transitionAppearTimeout={100}
-					transitionEnterTimeout={800}
-					transitionLeaveTimeout={800}>
+					transitionEnterTimeout={this.props.enterAnimationTime}
+					transitionLeaveTimeout={this.props.leaveAnimationTime}>
 					{this.state.notifications}
 				</CSSTransitionGroup>
 			</div>
 		)
 	}
 }
+
+let counter = 0;
 
 class AppComponent extends React.Component {
   constructor(props){
@@ -210,15 +238,17 @@ class AppComponent extends React.Component {
   }
 
   deleteNotification() {
-  	this.refs.notificationContainer.deleteNotification();
+  	this.refs.notificationContainer.removeFromEnd();
   }
 
   addNotification() {
-  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", 8000, null);
+  	// this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going", null, null);
+  	this.refs.notificationContainer.generateNotification(counter, "Hey man how is it going", null, null);
+  	counter++;
   }
 
   addCustomNotification() {
-  	this.refs.notificationContainer.addCustomNotification(<CustomNotificationBox />, guid(), 3000);
+  	this.refs.notificationContainer.addCustomNotification(guid(), <CustomNotificationBox />, null);
   }
 
   render() {
@@ -227,7 +257,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer ref="notificationContainer" reverseAppenedOrder={false} enterAnimation={"pop"}  leaveAnimation={"pop"}/>       
+        <NotificationContainer ref="notificationContainer" />       
       </div>
     );
   }

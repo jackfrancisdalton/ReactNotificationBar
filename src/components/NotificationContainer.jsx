@@ -84,8 +84,8 @@ class NotificationBox  extends React.Component {
 									<td className="right-box">
 										<div className="close-icon" onClick={() => this.destroy()}>
 											<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-											    <line x1="1" y1="18" x2="18" y2="1" strokeWidth="4"/>
-											    <line x1="1" y1="1" x2="18" y2="18" strokeWidth="4"/>
+											    <line x1="1" y1="13" x2="13" y2="1" strokeWidth="4"/>
+											    <line x1="1" y1="1" x2="13" y2="13" strokeWidth="4"/>
 											</svg>
 										</div>
 									</td>
@@ -159,15 +159,12 @@ class NotificationContainer extends React.Component {
   	}
 
 	// Creates A custom notification and pushes it to the stack
-  	pushCustomNotification(key, customComponent, survivalTime, onClick, onClickObject) {
+  	pushCustomNotification(key, customComponent, survivalTime) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
-  		if(!onClick) {
-  			onClick = function() {}
-  		}
 
   		let DOM = (
-  			<div className={"notification-container"} onClick={() => onClick(keyToAssign, onClickObject)} key={keyToAssign}>
+  			<div className={"notification-container"} key={keyToAssign}>
   				{customComponent}
   			</div>
   		);

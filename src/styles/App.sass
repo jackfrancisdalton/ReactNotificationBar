@@ -3,7 +3,7 @@
 
 body 
     color: #fff
-    background: #222
+    background: #400C24;
 
 .index img
     margin: 40px auto
@@ -20,6 +20,10 @@ body
     border-width: 1px 0
     background: #666
 
+
+$notificationColor: #222;
+$notificationHoverColor: #111;
+$fontColor: #fff;
 
 .notification-box-positioner
     display: block
@@ -78,22 +82,20 @@ body
 
         .notification-box
             box-sizing: border-box
-            position: absolute
             top: 120%
             left: 0
-            background: #333
+            background: $notificationColor;
             box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-            color: white
-            overflow: hidden
-            padding: 5px 10px
-            border-radius: 2px
-            position: relative
-            transition: opacity 0.4s ease-in-out, top 0s ease-in-out 0.3s
+            color: $fontColor;
+            overflow: hidden;
+            padding: 5px 10px;
+            border-radius: 2px;
             width: 300px;
-
+            transition: background 0.3s ease-in-out;
+            pointer: cursor;
 
             &:hover 
-                background: red
+                background: $notificationHoverColor
 
             table 
                 width: 100%;
@@ -119,18 +121,22 @@ body
 
                             .close-icon 
                                 padding: 4px;
-                                height: 20px;
-                                width: 20px;
+                                height: 14px;
+                                width: 14px;
+                                border-radius: 2px;
+                                cursor: pointer;
 
                                 &:hover
-                                    background: blue
+                                    background: grey;
+
+                                    
 
                                 svg 
-                                    height: 20px;
-                                    width: 20px;
+                                    height: 100%;
+                                    width: 100%;
                                     display: block;
 
                                     line
-                                        stroke: black
+                                        stroke: $fontColor;
 
 

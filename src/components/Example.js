@@ -54,7 +54,7 @@ class AppComponent extends React.Component {
 
   addCustomNotification() {
   	let onClickFunc = (key, obj ) => this.refs.notificationContainer.removeByKey(key)
-  	this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox />, null, onClickFunc, { data: "TEST"});
+  	this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox />, null);
   }
 
   render() {

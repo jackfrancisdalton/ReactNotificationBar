@@ -27,11 +27,11 @@ No properties are required.
 ```javascript
 {
 	position: "bottom-right",
-	addToEnd: false,		
-	enterAnimation: "fade",		
+	addToEnd: false,
+	enterAnimation: "fade",
 	leaveAnimation: "fade",
-    customIcon: null,
-    icon: null,
+	customIcon: null,
+	icon: null,
 }
 ```
 
@@ -39,47 +39,55 @@ No properties are required.
 In order to interact with the notification container several functions can be acessed through the reference of the component.
 
 ### pushNotification
-Adds a notification to the current stack
-Structure: `pushNotification(key, message, icon, survivalTime, onClick, onClickObject, showCloseButton)`
+Adds a notification to the stack
+
+Function arguments: `pushNotification(key, message, icon, survivalTime, onClick, onClickObject, showCloseButton)`
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
-| *key* | **Any** | a unique key for targeting the notification (will be set to a guid if not supplied) |
-| *message* | **String** | The text to be displayed in the notification |
-| *icon* | **String** |  The notification to be displayed (valid values : `share`, `person`, `notification`, `check`, `folder`, `shoppingCart`, `alarm`, `mail`, `attach-horz`, `attach-vert`) |
-| *survivaTime* | **Number** | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
-| *onClick* | **function** | Callback function for when the notification is clicked. The function is supplied with the notification `key` and `onClickObject` so should be formatted as such `function(key, onClickObject)`  |
-| *onClickObject* | **Object** | An object that is supplied to the onClick function |
-| *showCloseButton* | **boolean** | Displays a close button that destories the notification |
+| **key** | *Any* | a unique key for targeting the notification (will be set to a guid if not supplied) |
+| **message** | *String* | The text to be displayed in the notification |
+| **icon** | *String* |  The notification to be displayed (valid values : `share`, `person`, `notification`, `check`, `folder`, `shoppingCart`, `alarm`, `mail`, `attach-horz`, `attach-vert`) |
+| **survivaTime** | *Number* | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
+| **onClick** | *function* | Callback function for when the notification is clicked. The function is supplied with the notification `key` and `onClickObject` so should be formatted as such `function(key, onClickObject)`  |
+| **onClickObject** | *Object* | An object that is supplied to the onClick function |
+| **showCloseButton** | *boolean* | Displays a close button that destories the notification |
 
 
 ### pushCustomNotification
-Structure: `pushCustomNotification(key, customComponent, survivalTime, onClick, onClickObject)`
+Adds a notification to the stack using an injected react componenet of your creation.
+
+Function arguments: `pushCustomNotification(key, customComponent, survivalTime, onClick, onClickObject)`
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
-| *key* | **Any** | a unique key for targeting the notification (will be set to a guid if not supplied) |
-| *customComponent* | **Component** | A custom React component to be injected as the notifications DOM |
-| *survivaTime* | **Number** | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
+| **key** | *Any* | a unique key for targeting the notification (will be set to a guid if not supplied) |
+| **customComponent** | *Component* | A custom React component to be injected as the notifications DOM |
+| **survivaTime** | *Number* | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
 
 ### removeByKey
-Structure: `removeByKey(targetKey)`
+Function arguments: `removeByKey(targetKey)`
+
 Animaites out and destroys the notification based on the key supplied.
 
 ### removeByIndex
-Structure: `removeByIndex(targetIdx)`
+Function arguments: `removeByIndex(targetIdx)`
+
 Animaites out and destroys the notification based on the index in the notification stack.
 
 ### removeFromEnd
-Structure: `removeFromEnd()`
+Function arguments: `removeFromEnd()`
+
 Animaites out and destroys the notification at the end of the notification stack.
 
 ### removeFromFront
-Structure: `removeFromFront()`
+Function arguments: `removeFromFront()`
+
 Animaites out and destroys the notification at the front of the notification stack.
 
 ### getNotifications
-Structure: `getNotifications()`
+Function arguments: `getNotifications()`
+
 Returns a copy of the current notification stack.
 
 

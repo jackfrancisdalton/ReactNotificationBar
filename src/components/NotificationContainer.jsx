@@ -28,9 +28,12 @@ class NotificationBox  extends React.Component {
 		this.props.onClick();
 	}
 
+	destroy() {
+		this.props.destroy()
+	}
+
 	render() {
 		let icon;
-
 		switch(this.props.icon) {
 			case "Share":
 				icon = <IconSet.Share />
@@ -63,7 +66,7 @@ class NotificationBox  extends React.Component {
 				icon = <IconSet.AttchmentVerticle />
 				break;
 			default: 
-				icon = <IconSet.Notification />
+				icon = null
 				break;
 		}
 
@@ -71,22 +74,24 @@ class NotificationBox  extends React.Component {
 			<div onClick={() => this.onClickNotification()}>
 				<div className={"notification-box"}>
 					<table>
-						<tr>
-							<td className="left-box">{this.props.text}</td>
-							<td className="middle-box">{icon}</td>
-							{/*<td className="right-box">
-								<svg viewPort="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg">
-								    <line x1="1" y1="11"
-								          x2="11" y2="1"
-								          stroke="black"
-								          stroke-width="2"/>
-								    <line x1="1" y1="1"
-								          x2="11" y2="11"
-								          stroke="black"
-								          stroke-width="2"/>
-								</svg>
-							</td>*/}
-						</tr>
+						<tbody>
+							<tr>
+								{icon && 
+									<td className="left-box">{icon}</td>
+								}
+								<td className="middle-box">{this.props.text}</td>
+								{this.props.showCloseButton == true &&
+									<td className="right-box">
+										<div className="close-icon" onClick={() => this.destroy()}>
+											<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+											    <line x1="1" y1="18" x2="18" y2="1" strokeWidth="4"/>
+											    <line x1="1" y1="1" x2="18" y2="18" strokeWidth="4"/>
+											</svg>
+										</div>
+									</td>
+								}								
+							</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -102,28 +107,25 @@ class NotificationContainer extends React.Component {
 			notifications: [],
 		}
 
-		this.generateNotification = this.generateNotification.bind(this);
-		this.addCustomNotification = this.addCustomNotification.bind(this);
+		this.pushNotification = this.pushNotification.bind(this);
+		this.pushCustomNotification = this.pushCustomNotification.bind(this);
 	}
 
 
 	// Assign Default Properties
 	static defaultProps = {
 		position: "bottom-right",
-		reverseAppenedOrder: false,
+		addToEnd: false,
 		
-		enterAnimation: "fade",
-        enterAnimationTime: 1000,
-		
+		enterAnimation: "fade",		
 		leaveAnimation: "fade",
-        leaveAnimationTime: 1000,
 
         customIcon: null,
         icon: null,
 	}
 
 	// Creates A notification and pushes it to the stack
-  	generateNotification(key, message, icon, survivalTime, onClick, onClickObject) {
+  	pushNotification(key, message, icon, survivalTime, onClick, onClickObject, showClose) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
   		if(!onClick) {
@@ -132,12 +134,16 @@ class NotificationContainer extends React.Component {
 
   		let DOM = (
   			<div className={"notification-container"} key={keyToAssign}>
-	  			<NotificationBox text={message} onClick={() => onClick(keyToAssign, onClickObject)} icon={icon} />
+	  			<NotificationBox text={message} 
+	  					onClick={() => onClick(keyToAssign, onClickObject)}
+	  					destroy={() => this.removeByKey(keyToAssign)} 
+	  					showCloseButton={showClose}
+	  					icon={icon} />
 	  		</div>
 	  	)
 
   		// add new notification to stack
-  		this.props.reverseAppenedOrder == true ? updatedArray.push(DOM) : updatedArray.unshift(DOM)
+  		this.props.addToEnd == true ? updatedArray.push(DOM) : updatedArray.unshift(DOM)
   		this.setState({ notifications: updatedArray })
 
   		// Initialise timeout for removing notification if surivival time is supplied
@@ -155,7 +161,7 @@ class NotificationContainer extends React.Component {
   	}
 
 	// Creates A custom notification and pushes it to the stack
-  	addCustomNotification(key, customComponent, survivalTime, onClick, onClickObject) {
+  	pushCustomNotification(key, customComponent, survivalTime, onClick, onClickObject) {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
   		if(!onClick) {
@@ -169,7 +175,7 @@ class NotificationContainer extends React.Component {
   		);
 
   		// Pushes the notification to the top or bottom depending on position
-  		(this.props.reverseAppenedOrder == true) ? updatedArray.push(DOM) : updatedArray.unshift(DOM)	  		
+  		(this.props.addToEnd == true) ? updatedArray.push(DOM) : updatedArray.unshift(DOM)	  		
   		this.setState({ notifications: updatedArray })
 
   		// Initialise timeout for removing notification if surivival time is supplied
@@ -223,8 +229,27 @@ class NotificationContainer extends React.Component {
   	}
 
 	render() {
+		let positionClass;
+		switch(this.props.position) {
+			case "top-left":
+				positionClass = "top-left";
+				break;
+			case "top-right":
+				positionClass = "top-right";
+				break;
+			case "bottom-left":
+				positionClass = "bottom-left";
+				break;
+			case "bottom-right":
+				positionClass = "bottom-right";
+				break;
+			default:
+				positionClass = "bottom-right";
+				break;
+		}
+
 		return(
-			<div className={"notification-box-positioner " + this.props.position}>
+			<div className={"notification-box-positioner " + positionClass}>
 				<CSSTransitionGroup
 					transitionName={{ 
 						enter: this.props.enterAnimation + "-enter",
@@ -232,8 +257,8 @@ class NotificationContainer extends React.Component {
 						appear: this.props.enterAnimation + "-enter"
 					}}
         			transitionLeave={true}
-					transitionEnterTimeout={this.props.enterAnimationTime}
-					transitionLeaveTimeout={this.props.leaveAnimationTime} >
+					transitionEnterTimeout={600}
+					transitionLeaveTimeout={600} >
 					{this.state.notifications}
 				</CSSTransitionGroup>
 			</div>

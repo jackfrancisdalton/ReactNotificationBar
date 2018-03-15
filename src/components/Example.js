@@ -47,13 +47,14 @@ class AppComponent extends React.Component {
   }
 
   addNotification() {
-  	let onClickFunc = (key, obj) =>  this.refs.notificationContainer.removeByKey(key)
-  	this.refs.notificationContainer.generateNotification(guid(), "Hey man how is it going asdasd okas dkasodk pasokdapks doaskd paskd ask", "check", null, onClickFunc, {data: "TEST"});
+  	// let onClickFunc = (key, obj) =>  this.refs.notificationContainer.removeByKey(key)
+  	let onClickFunc = (key, obj) =>  console.log("BOB")
+  	this.refs.notificationContainer.pushNotification(guid(), "Hey man how is spask sdfsdf sdfsdf sdfsdf sdfsdf sdfd ask", null , null, onClickFunc, {data: "TEST"}, true);
   }
 
   addCustomNotification() {
   	let onClickFunc = (key, obj ) => this.refs.notificationContainer.removeByKey(key)
-  	this.refs.notificationContainer.addCustomNotification(guid(), <CustomNotificationBox />, null, onClickFunc, { data: "TEST"});
+  	this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox />, null, onClickFunc, { data: "TEST"});
   }
 
   render() {
@@ -64,8 +65,10 @@ class AppComponent extends React.Component {
         <button onClick={this.deleteNotification}>delete</button>
         <NotificationContainer 
         		ref="notificationContainer"
-        		enterAnimation={"slide-right"} 
-        		position={"top-right"}/>       
+        		addToEnd={true}
+        		enterAnimation={"slide-right"}
+        		exitAnimation={"fade"} 
+        		position={"bottom-lefsdft"}/>       
       </div>
     );
   }

@@ -31,6 +31,7 @@ body
         left: 0
 
         .notification-container .notification-box
+            float: left
             margin: 10px 10px 0px 10px
 
     &.top-right
@@ -38,6 +39,7 @@ body
         right: 0
 
         .notification-container .notification-box
+            float: right
             margin: 10px 10px 0px 10px
     
     &.bottom-left
@@ -45,6 +47,7 @@ body
         left: 0
 
         .notification-container .notification-box
+            float: left
             margin: 0px 10px 10px 10px
 
     &.bottom-right
@@ -52,6 +55,7 @@ body
         right: 0
 
         .notification-container .notification-box
+            float: right
             margin: 0px 10px 10px 10px
 
     .notification-container 
@@ -62,12 +66,15 @@ body
         height: 100%
         max-height: 100px
 
-        @include fade-transition(300ms, 300ms, 10px)
-        @include slide-top-transition(300ms, 300ms)
-        @include slide-right-transition(300ms, 300ms)
-        @include slide-bottom-transition(300ms, 300ms)
-        @include slide-left-transition(300ms, 300ms)
-        @include pop-transition(300ms, 300ms)
+        $inTime: 600ms
+        $outTime: 600ms
+
+        @include fade-transition($inTime, $outTime)
+        @include slide-top-transition($inTime, $outTime)
+        @include slide-right-transition($inTime, $outTime)
+        @include slide-bottom-transition($inTime, $outTime)
+        @include slide-left-transition($inTime, $outTime)
+        @include pop-transition($inTime, $outTime)
 
         .notification-box
             box-sizing: border-box
@@ -78,19 +85,52 @@ body
             box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
             color: white
             overflow: hidden
-            padding: 2px 10px
-            border-radius: 5px
+            padding: 5px 10px
+            border-radius: 2px
             position: relative
             transition: opacity 0.4s ease-in-out, top 0s ease-in-out 0.3s
             width: 300px;
 
+
+            &:hover 
+                background: red
+
             table 
-                border: 1px solid red;
-                height: 20px;
+                width: 100%;
 
                 tr
                     height: 100%
+
                     td 
                         height: 100%
-                        bordere: 1px solid blue;
                         padding: 0;
+
+                        svg 
+                            display: block
+
+                        &.left-box
+                            padding-right: 10px;
+
+                        &.middle-box 
+
+                        &.right-box
+                            height: 20px;
+                            width: 20px;
+
+                            .close-icon 
+                                padding: 4px;
+                                height: 20px;
+                                width: 20px;
+
+                                &:hover
+                                    background: blue
+
+                                svg 
+                                    height: 20px;
+                                    width: 20px;
+                                    display: block;
+
+                                    line
+                                        stroke: black
+
+

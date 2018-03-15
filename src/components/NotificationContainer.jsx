@@ -116,10 +116,8 @@ class NotificationContainer extends React.Component {
 	static defaultProps = {
 		position: "bottom-right",
 		addToEnd: false,
-		
 		enterAnimation: "fade",		
 		leaveAnimation: "fade",
-
         customIcon: null,
         icon: null,
 	}

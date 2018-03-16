@@ -1,7 +1,7 @@
 import normalize from 'normalize.css/normalize.css';
 import style from 'styles/App.sass';
 import React from 'react';
-import { NotificationContainer } from './NotificationContainer.jsx'
+import { NotificationHandler } from './NotificationContainer.jsx'
 
 function guid() {
   function s4() {
@@ -74,7 +74,7 @@ class AppComponent extends React.Component {
         <button onClick={this.addNotification}>add</button>
         <button onClick={this.addCustomNotification}>add custom</button>
         <button onClick={this.deleteNotification}>delete</button>
-        <NotificationContainer 
+        <NotificationHandler 
         		ref="notificationContainer"
         		addToEnd={true}
         		enterAnimation={"slide-right"}

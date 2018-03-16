@@ -106,18 +106,15 @@ class NotificationBox  extends React.Component {
 	}
 }
 
-class NotificationContainer extends React.Component {
+class NotificationHandler extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			notifications: [],
-		}
+		this.state = { notifications: [] }
 
 		this.pushNotification = this.pushNotification.bind(this);
 		this.pushCustomNotification = this.pushCustomNotification.bind(this);
 	}
-
 
 	// Assign Default Properties
 	static defaultProps = {
@@ -198,7 +195,7 @@ class NotificationContainer extends React.Component {
   			parentRef: this,
   			destory: () => this.removeByKey(keyToAssign),
   			notificationKey: keyToAssign,
-  		})
+  		});
 
   		let DOM = (
   			<div className={"notification-container"} key={keyToAssign}>
@@ -312,4 +309,4 @@ class NotificationContainer extends React.Component {
 
 NotificationContainer.propTypes = Validator
 
-export { NotificationContainer }
+export { NotificationHandler }

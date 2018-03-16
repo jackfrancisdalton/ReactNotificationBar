@@ -2,7 +2,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "./src/components/NotificationContainer.jsx",
+  "main": "./src/components/NotificationHandler.jsx",
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",
@@ -19,8 +19,8 @@
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
   "repository": "",
-  "keywords": [],
-  "author": "Your name here",
+  "keywords": ["React", "ReactJS", "notifications", "notification", "animation", "handler"],
+  "author": "Jack Francis Dalton",
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",

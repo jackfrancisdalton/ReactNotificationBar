@@ -1,5 +1,6 @@
 import React from 'react';
 import IconSet from './IconSet'
+import Validator from './Validator'
 import { CSSTransitionGroup } from 'react-transition-group'
 
 function guid() {
@@ -130,10 +131,25 @@ class NotificationContainer extends React.Component {
 
 	// Creates A notification and pushes it to the stack
   	pushNotification(key, message, icon, survivalTime, onClick, onClickObject, showClose) {
-  		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
+
+  		if(typeof message != 'string' && message != undefined)
+  			throw new TypeError('"message" must be of type string');
+
+  		if((typeof icon != 'string') && icon != undefined)
+			throw new TypeError('"icon" must be of type string');
+
+  		if ((typeof survivalTime != 'number') && survivalTime != undefined) 
+			throw new TypeError('"survivalTime" must be of type number');
+
+  		if ((typeof onClick != 'function') && onClick != undefined) 
+			throw new TypeError('"onClick" must be of type function');
+		
+		if ((typeof showClose != 'boolean') && showClose != undefined) 
+			throw new TypeError('"showClose" must be of type boolean');
+
   		if(!onClick) {
-  			onClick = function() {}
+  			onClick = () => { }
   		}
 
   		let DOM = (
@@ -147,6 +163,7 @@ class NotificationContainer extends React.Component {
 	  	)
 
   		// add new notification to stack
+  		let updatedArray = this.state.notifications;
   		this.props.addToEnd == true ? updatedArray.push(DOM) : updatedArray.unshift(DOM)
   		this.setState({ notifications: updatedArray })
 
@@ -166,8 +183,16 @@ class NotificationContainer extends React.Component {
 
 	// Creates A custom notification and pushes it to the stack
   	pushCustomNotification(key, customComponent, survivalTime) {
-  		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
+
+  		if(customComponent == undefined)
+  			throw new Error("'customComponent' is required, but not passed in")
+
+  		if ((!React.isValidElement(customComponent)) && customComponent != undefined) 
+			throw new TypeError('"customComponent" must be of type React Component');
+		
+		if ((typeof survivalTime != 'boolean') && survivalTime != undefined) 
+			throw new TypeError('"survivalTime" must be of type number');
 
   		let extendedComponent = React.cloneElement(customComponent, {
   			parentRef: this,
@@ -182,6 +207,7 @@ class NotificationContainer extends React.Component {
   		);
 
   		// Pushes the notification to the top or bottom depending on position
+  		let updatedArray = this.state.notifications;
   		(this.props.addToEnd == true) ? updatedArray.push(DOM) : updatedArray.unshift(DOM)	  		
   		this.setState({ notifications: updatedArray })
 
@@ -200,6 +226,10 @@ class NotificationContainer extends React.Component {
   	}
 
   	removeByKey(targetKey) {
+
+  		if(targetKey == undefined)
+  			throw new Error("'targetKey' is required, but not passed in")
+
   		this.state.notifications.forEach((item, idx) => {
   			if(item.key === targetKey.toString()) {
   				let currentNotifications = this.state.notifications
@@ -210,6 +240,13 @@ class NotificationContainer extends React.Component {
   	}
 
   	removeByIndex(targetIdx) {
+
+  		if(targetIdx == undefined)
+  			throw new Error("'targetIdx' is required, but not passed in")
+
+  		if ((typeof targetIdx == "number") && targetIdx != undefined) 
+			throw new TypeError('"targetIdx" must be of type number');
+
   		this.state.notifications.forEach((item, idx) => {
   			if(idx === targetIdx) {
   				let currentNotifications = this.state.notifications
@@ -272,5 +309,7 @@ class NotificationContainer extends React.Component {
 		)
 	}
 }
+
+NotificationContainer.propTypes = Validator
 
 export { NotificationContainer }

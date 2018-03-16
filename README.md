@@ -4,7 +4,7 @@ Notification pop-ups are becoming an increasingly common feature in modern websi
 What does `React Notification Handler` give you :
 * Notification timeouts
 * Notification enter and exit animations 
-* Multiple notification stacks
+* Notification Stacking
 * Responsive support
 * Notification positioning
 
@@ -61,7 +61,7 @@ Function arguments: `pushCustomNotification(key, customComponent, survivalTime)`
 | -------- | ---- | ----------- |
 | **key** | *Any* | a unique key for targeting the notification (will be set to a guid if not supplied) |
 | **customComponent** | *Component* | A custom React component to be injected as the notifications pop-up DOM |
-| **survivaTime** | *Number* | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
+| **survivalTime** | *Number* | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
 
 As flexability is the aim of injecting custom components, `React Notification Handler` automatically appendeds 3 properties to your component:
 * `parentRef` : `this` value from `React Notification Handler` exposing all props/state/functions.
@@ -158,7 +158,7 @@ class YourApplication extends React.Component {
 		let onClickFunc = (key, obj) => alert("notification click with data: " + obj.data)
 
 		// Adds a new generic notification to the stack with a 10 second timeout
-		this.refs.notificationContainer.pushNotification(guid(), "generic notification", "mail" , 10000, onClickFunc, { data: "example value" }, true);
+		this.refs.notificationContainer.pushNotification(guid(), "generic notification message", "mail" , 10000, onClickFunc, { data: "example value" }, true);
 	}
 
 	addCustomNotification() {

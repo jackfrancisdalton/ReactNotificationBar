@@ -61,7 +61,7 @@ class AppComponent extends React.Component {
 
   addNotification() {
   	let onClickFunc = (key, obj) =>  console.log("BOB")
-  	this.refs.notificationContainer.pushNotification(guid(), "Hey man how is spask sdfsdf sdfsdf sdfsdf sdfsdf sdfd ask", null , null, onClickFunc, {data: "TEST"}, true);
+  	this.refs.notificationContainer.pushNotification(guid(), 'my custom notification', null , null, onClickFunc, {data: "TEST"}, true);
   }
 
   addCustomNotification() {

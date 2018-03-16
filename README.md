@@ -55,22 +55,18 @@ Function arguments: `pushNotification(key, message, icon, survivalTime, onClick,
 ### pushCustomNotification
 Adds a custom notification box to the stack based on your injected React componenet.
 
-Function arguments: `pushCustomNotification(key, customComponent, survivalTime, onClick, onClickObject)`
+Function arguments: `pushCustomNotification(key, customComponent, survivalTime)`
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
 | **key** | *Any* | a unique key for targeting the notification (will be set to a guid if not supplied) |
-| **customComponent** | *Component* | A custom React component to be injected as the notifications DOM |
+| **customComponent** | *Component* | A custom React component to be injected as the notifications pop-up DOM |
 | **survivaTime** | *Number* | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
 
- console.log(this.props.parentRef)
-    console.log(this.props.destoryThis)
-    console.log(this.props.notificationKey)
-
-In order to increase flexability of custom components, 3 properties are automatically appended to your injected custom component:
-* `parentRef` : The `this` value from `React Notification Handler` exposing all props/state/functions
+As flexability is the aim of injecting custom components, `React Notification Handler` automatically appendeds 3 properties to your component:
+* `parentRef` : `this` value from `React Notification Handler` exposing all props/state/functions.
 * `destory` : A function that takes no arguments and destroys the specific notification when called.  
-* `notificationKey` : The key assigned to your custom notification
+* `notificationKey` : The key assigned to your custom notification.
 
 ### removeByKey
 Animates out and then destroys the notification based on the key supplied.
@@ -158,15 +154,15 @@ class YourApplication extends React.Component {
 	}
 
 	addNotification() {
-		// onClick function 
+		// onClick function prints the "onClickObject" using alert  
 		let onClickFunc = (key, obj) => alert("notification click with data: " + obj.data)
 
-		// Adds a new generic notification to the stack
+		// Adds a new generic notification to the stack with a 10 second timeout
 		this.refs.notificationContainer.pushNotification(guid(), "generic notification", "mail" , 10000, onClickFunc, { data: "example value" }, true);
 	}
 
 	addCustomNotification() {
-		// Add custom notification to the stack
+		// Add custom notification to the stack that does not timeout
 		this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox customMessage={"HELLO"}/>, null);
 	}
 

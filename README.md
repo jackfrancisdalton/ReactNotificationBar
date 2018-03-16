@@ -110,7 +110,7 @@ Function arguments: `getNotifications()`
 import React from 'react';
 import { NotificationContainer } from 'NotificationContainer'
 
-// Function for generating unique keys for notifications
+// An arbitrary function for generating unique keys for notifications
 function guid() {
 	function s4() {
 		return Math.floor((1 + Math.random()) * 0x10000)
@@ -126,20 +126,23 @@ class CustomNotificationBox  extends React.Component {
 	constructor(props) {
 		super(props);
 
-    this.deleteThis = this.deleteThis.bind(this);
-    this.alertNotificationKey = this.alertNotificationKey.bind(this);
-    this.printNumberOfNotifcations = this.printNumberOfNotifcations.bind(this);
+		this.deleteThis = this.deleteThis.bind(this);
+		this.alertNotificationKey = this.alertNotificationKey.bind(this);
+		this.printNumberOfNotifcations = this.printNumberOfNotifcations.bind(this);
 	}
 
   deleteThis() {
+  	//this.props.destroy is automatically appended as a property 
     this.props.destory();
   }
 
   alertNotificationKey() {
+  	//this.props.notificationKey is automatically appended as a property 
     alert(this.props.notificationKey);
   }
 
   printNumberOfNotifcations() {
+  	//this.props.parentRef is automatically appended as a property 
     alert(this.props.parentRef.state.notifications.length)
   }
 
@@ -155,6 +158,7 @@ class CustomNotificationBox  extends React.Component {
 	}
 }
 
+// An example application, demonstraiting how to integrate NotificationHandler
 class YourApplication extends React.Component {
 	constructor(props){
 		super(props)
@@ -168,12 +172,12 @@ class YourApplication extends React.Component {
 		let onClickFunc = (key, obj) => alert("notification click with data: " + obj.data)
 
 		// Adds a new generic notification to the stack with a 10 second timeout
-		this.refs.notificationContainer.pushNotification(guid(), "generic notification message", "mail" , 10000, onClickFunc, { data: "example value" }, true);
+		this.refs.NotificationHandler.pushNotification(guid(), "generic notification message", "mail" , 10000, onClickFunc, { data: "example value" }, true);
 	}
 
 	addCustomNotification() {
 		// Add custom notification to the stack that does not timeout
-		this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox customMessage={"HELLO"}/>, null);
+		this.refs.NotificationHandler.pushCustomNotification(guid(), <CustomNotificationBox customMessage={"HELLO"}/>, null);
 	}
 
 	render() {
@@ -182,9 +186,8 @@ class YourApplication extends React.Component {
 				<h1> Welcome to my fancy website! </h1>
 				<button onClick={this.addNotification}>add</button>
 				<button onClick={this.addCustomNotification}>add custom</button>
-
-				<NotificationContainer 
-					ref="notificationContainer"
+				<NotificationHandler 
+					ref="NotificationHandler"
 					position={"bottom-right"}
 					addToEnd={true}
 					enterAnimation={"slide-right"}

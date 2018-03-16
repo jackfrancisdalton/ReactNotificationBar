@@ -19,6 +19,7 @@ Import:
 
 ```
 import NotificationHandler from 'react-notification-handler'
+```
 
 ## Properties 
 | Property | Type | Description |
@@ -44,7 +45,7 @@ Property options:
 ```
 
 ## Functions 
-`React Notification Handler` contains a multitude of functions to integrate it with your react application.
+`React Notification Handler` contains a multitude of functions to integrate it with your react application. These functions should be accessed through a `ref` value placed on the notification handler (this can be seen in the example below).
 
 ### pushNotification
 Generates and push an out-of-box notification box based on the properties passed into the function.

@@ -16,19 +16,23 @@ class NotificationBox  extends React.Component {
 		super(props);
 
 		this.state = {
-			isActive: false,
-			isVisible: false,
-			textContent: "content",
+			isHovered: false
 		}
 
 		this.onClickNotification = this.onClickNotification.bind(this);
+		this.setHoverState = this.setHoverState.bind(this);
 	}
 
-	onClickNotification(value) {
+	onClickNotification(e) {
 		this.props.onClick();
 	}
 
-	destroy() {
+	setHoverState(isHovered) {
+		this.setState({ isHovered: isHovered })
+	}
+
+	destroy(event) {
+		event.stopPropagation();
 		this.props.destroy()
 	}
 
@@ -71,7 +75,9 @@ class NotificationBox  extends React.Component {
 		}
 
 		return (
-			<div onClick={() => this.onClickNotification()}>
+			<div onClick={this.onClickNotification} 
+				onMouseEnter={() => this.setHoverState(true)} 
+				onMouseLeave={() => this.setHoverState(false)}>
 				<div className={"notification-box"}>
 					<table>
 						<tbody>
@@ -82,7 +88,7 @@ class NotificationBox  extends React.Component {
 								<td className="middle-box">{this.props.text}</td>
 								{this.props.showCloseButton == true &&
 									<td className="right-box">
-										<div className="close-icon" onClick={() => this.destroy()}>
+										<div className="close-icon" onClick={(event) => this.destroy(event)}>
 											<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
 											    <line x1="1" y1="13" x2="13" y2="1" strokeWidth="4"/>
 											    <line x1="1" y1="1" x2="13" y2="13" strokeWidth="4"/>

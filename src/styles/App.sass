@@ -1,25 +1,4 @@
-
 @import './Mixins'
-
-body 
-    color: #fff
-    background: #400C24;
-
-.index img
-    margin: 40px auto
-    border-radius: 4px
-    background: #fff
-    display: block
-
-
-.index .notice
-    margin: 20px auto
-    padding: 15px 0
-    text-align: center
-    border: 1px solid #000
-    border-width: 1px 0
-    background: #666
-
 
 $notificationColor: #222;
 $notificationHoverColor: #111;
@@ -29,6 +8,7 @@ $fontColor: #fff;
     display: block
     position: absolute
     overflow: hidden
+    pointer-events: none
 
     &.top-left
         top: 0
@@ -69,6 +49,7 @@ $fontColor: #fff;
         overflow: hidden
         height: 100%
         max-height: 100px
+        pointer-events: auto;
 
         $inTime: 600ms
         $outTime: 600ms
@@ -84,57 +65,57 @@ $fontColor: #fff;
             box-sizing: border-box
             top: 120%
             left: 0
-            background: $notificationColor;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-            color: $fontColor;
-            overflow: hidden;
-            padding: 5px 10px;
-            border-radius: 2px;
-            width: 300px;
-            transition: background 0.5s ease-in-out;
-            cursor: pointer;
+            background: $notificationColor
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)
+            color: $fontColor
+            overflow: hidden
+            padding: 5px 10px
+            border-radius: 2px
+            width: 300px
+            transition: background 0.5s ease-in-out
+            cursor: pointer
 
             &:hover 
                 background: $notificationHoverColor
 
             table 
-                width: 100%;
+                width: 100%
 
                 tr
                     height: 100%
 
                     td 
                         height: 100%
-                        padding: 0;
+                        padding: 0
 
                         svg 
                             display: block
 
                         &.left-box
-                            padding-right: 10px;
+                            padding-right: 10px
 
                         &.middle-box 
 
                         &.right-box
-                            height: 20px;
-                            width: 20px;
+                            height: 20px
+                            width: 20px
 
                             .close-icon 
-                                padding: 4px;
-                                height: 14px;
-                                width: 14px;
-                                border-radius: 2px;
-                                cursor: pointer;
+                                padding: 4px
+                                height: 14px
+                                width: 14px
+                                border-radius: 2px
+                                cursor: pointer
 
                                 &:hover svg line
-                                    stroke: grey;
+                                    stroke: grey
 
                                 svg 
-                                    height: 100%;
-                                    width: 100%;
-                                    display: block;
+                                    height: 100%
+                                    width: 100%
+                                    display: block
 
                                     line
-                                        stroke: $fontColor;
+                                        stroke: $fontColor
 
 

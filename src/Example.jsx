@@ -1,7 +1,6 @@
-import normalize from 'normalize.css/normalize.css';
-import style from 'styles/App.sass';
 import React from 'react';
-import { NotificationHandler } from './NotificationContainer.jsx'
+import normalize from 'normalize.css/normalize.css'
+import NotificationHandler from './components/NotificationHandler.jsx'
 
 function guid() {
   function s4() {
@@ -60,7 +59,7 @@ class AppComponent extends React.Component {
   }
 
   addNotification() {
-  	let onClickFunc = (key, obj) =>  console.log("BOB")
+  	let onClickFunc = (key, obj) =>  console.log("passed information:" + obj.data)
   	this.refs.notificationContainer.pushNotification(guid(), 'my custom notification', null , null, onClickFunc, {data: "TEST"}, true);
   }
 

@@ -1,14 +1,24 @@
 # React Notification Handler
-Notification pop-ups are becoming an increasingly common feature in modern websites. This package aims to supply a framework for handling common notification functionality, whilst not limiting specific functionality/DOM/styling your implementation requires. 
+Notification pop-ups are becoming an increasingly common feature in modern websites. This package supplies a framework for handling common notification functionality, whilst allowing your application to specific functionality/DOM/styling by injecting components. 
 
 What does `React Notification Handler` give you :
 * Notification timeouts
 * Notification enter and exit animations 
 * Notification Stacking
-* Responsive support
 * Notification positioning
 
 Additionally this package also comes with a configurable out-of-box notification-box componenet for the case that your application does not require a custom notification box.
+
+Installation: 
+
+```
+npm install --save react-notification-handler
+```
+
+Import:
+
+```
+import NotificationHandler from 'react-notification-handler'
 
 ## Properties 
 | Property | Type | Description |
@@ -133,13 +143,12 @@ class CustomNotificationBox  extends React.Component {
   }
 
 	render() {
-
 		return (
 			<div className={"notification-container"}>
 				<h3>Custom Notification Wahoo!</h3>
-        <button onClick={this.alertNotificationKey}>show key</button>
-        <button onClick={this.deleteThis}>delete this</button>
-        <button onClick={this.printNumberOfNotifcations}>show notification count</button>
+				<button onClick={this.alertNotificationKey}>show key</button>
+				<button onClick={this.deleteThis}>delete this</button>
+				<button onClick={this.printNumberOfNotifcations}>show notification count</button>
 			</div>
 		);
 	}

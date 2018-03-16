@@ -12,7 +12,7 @@ Additionally this package also comes with a configurable out-of-box notification
 Installation: 
 
 ```
-npm install --save react-notification-handler
+npm install react-notification-handler --save
 ```
 
 Import:

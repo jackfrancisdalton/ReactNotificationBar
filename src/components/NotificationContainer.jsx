@@ -169,9 +169,15 @@ class NotificationContainer extends React.Component {
   		let updatedArray = this.state.notifications;
   		let keyToAssign = key ? key : guid();
 
+  		let extendedComponent = React.cloneElement(customComponent, {
+  			parentRef: this,
+  			destory: () => this.removeByKey(keyToAssign),
+  			notificationKey: keyToAssign,
+  		})
+
   		let DOM = (
   			<div className={"notification-container"} key={keyToAssign}>
-  				{customComponent}
+  				{extendedComponent}
   			</div>
   		);
 

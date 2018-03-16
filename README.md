@@ -1,61 +1,59 @@
 # React Notification Handler
-this package is designed to acheive two goals 
-- supply a quick out of the box notification solution 
-- supply a framework for notifications that allows complete customisability
-- animations built in
-- configurable onClick functions 
-- Time outs  
-- injectable dom 
-- support for notification stacking
+Notification pop-ups are becoming an increasingly common feature in modern websites. This package aims to supply a framework for handling common notification functionality, whilst not limiting specific functionality/DOM/styling your implementation requires. 
+
+What does `React Notification Handler` give you :
+* Notification timeouts
+* Notification enter and exit animations 
+* Multiple notification stacks
+* Responsive support
+* Notification positioning
+
+Additionally this package also comes with a configurable out-of-box notification-box componenet for the case that your application does not require a custom notification box.
 
 ## Properties 
-No properties are required.
-
 | Property | Type | Description |
 | -------- | ---- | ----------- |
-| position | String | determins where the notifications will be displayed |
-| addToEnd | Boolean | if true notifications will be added to the end of the stack |
-| enterAnimation | String | defines how the notification will animate in |
-| leaveAnimation | String | defines how the notification will animate out |
+| **position** | *String* | Determins which corner notifications will be displayed |
+| **addToEnd** | *Boolean* | If `true` notifications will be added to the end of the notification stack |
+| **enterAnimation** | *String* | Specifies how notifications will animate in |
+| **leaveAnimation** | *String* | Specifies how notifications will animate out |
 
-### Valid property values
+Property options: 
 * `position` : `top-left`, `top-right`, `bottom-left`, `bottom-right`
 * `enterAnimation` : `fade`, `pop`, `slide-top`, `slide-right`, `slide-bottom`, `slide-left`
 * `exitAnimation` : `fade`, `pop`, `slide-top`, `slide-right`, `slide-bottom`, `slide-left`
 
-### Default values
+### Default Property Values
 ```javascript
 {
 	position: "bottom-right",
 	addToEnd: false,
 	enterAnimation: "fade",
-	leaveAnimation: "fade",
-	customIcon: null,
-	icon: null,
+	leaveAnimation: "fade"
 }
 ```
 
 ## Functions 
-In order to interact with the notification container several functions can be acessed through the reference of the component.
+`React Notification Handler` contains a multitude of functions to integrate it with your react application.
 
 ### pushNotification
-Adds a notification to the stack
+Generates and push an out-of-box notification box based on the properties passed into the function.
 
 Function arguments: `pushNotification(key, message, icon, survivalTime, onClick, onClickObject, showCloseButton)`
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
-| **key** | *Any* | a unique key for targeting the notification (will be set to a guid if not supplied) |
+| **key** | *Any* | A unique key for referencing the notification (a random guid will be used if no key is supplied) |
 | **message** | *String* | The text to be displayed in the notification |
-| **icon** | *String* |  The notification to be displayed (valid values : `share`, `person`, `notification`, `check`, `folder`, `shoppingCart`, `alarm`, `mail`, `attach-horz`, `attach-vert`) |
-| **survivaTime** | *Number* | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
+| **icon** | *String* |  The notification to be displayed (valid options : `share`, `person`, `notification`, `check`, `folder`, `shoppingCart`, `alarm`, `mail`, `attach-horz`, `attach-vert`) |
+| **survivaTime** | *Number* | The time(milliseconds) before the notification is removed (notification will remain indefinitely if null) |
 | **onClick** | *function* | Callback function for when the notification is clicked. The function is supplied with the notification `key` and `onClickObject` so should be formatted as such `function(key, onClickObject)`  |
 | **onClickObject** | *Object* | An object that is supplied to the onClick function |
 | **showCloseButton** | *boolean* | Displays a close button that destories the notification |
 
 
 ### pushCustomNotification
-Adds a notification to the stack using an injected react componenet of your creation.
+Adds a custom notification box to the stack based on your injected React componenet.
 
 Function arguments: `pushCustomNotification(key, customComponent, survivalTime, onClick, onClickObject)`
 
@@ -65,30 +63,39 @@ Function arguments: `pushCustomNotification(key, customComponent, survivalTime, 
 | **customComponent** | *Component* | A custom React component to be injected as the notifications DOM |
 | **survivaTime** | *Number* | The time(milliseconds) before the notification is removed (will remain indefinitely if null) |
 
+ console.log(this.props.parentRef)
+    console.log(this.props.destoryThis)
+    console.log(this.props.notificationKey)
+
+In order to increase flexability of custom components, 3 properties are automatically appended to your injected custom component:
+* `parentRef` : The `this` value from `React Notification Handler` exposing all props/state/functions
+* `destory` : A function that takes no arguments and destroys the specific notification when called.  
+* `notificationKey` : The key assigned to your custom notification
+
 ### removeByKey
+Animates out and then destroys the notification based on the key supplied.
+
 Function arguments: `removeByKey(targetKey)`
 
-Animaites out and destroys the notification based on the key supplied.
-
 ### removeByIndex
+Animates out and then destroys the notification based on the index in the notification stack.
+
 Function arguments: `removeByIndex(targetIdx)`
 
-Animaites out and destroys the notification based on the index in the notification stack.
-
 ### removeFromEnd
+Animates out and then destroys the notification at the end of the stack.
+
 Function arguments: `removeFromEnd()`
 
-Animaites out and destroys the notification at the end of the notification stack.
-
 ### removeFromFront
+Animates out and then destroys the notification at the start of the stack.
+
 Function arguments: `removeFromFront()`
 
-Animaites out and destroys the notification at the front of the notification stack.
-
 ### getNotifications
-Function arguments: `getNotifications()`
-
 Returns a copy of the current notification stack.
+
+Function arguments: `getNotifications()`
 
 
 ## Implemntation
@@ -111,18 +118,38 @@ function guid() {
 class CustomNotificationBox  extends React.Component {
 	constructor(props) {
 		super(props);
+
+    this.deleteThis = this.deleteThis.bind(this);
+    this.alertNotificationKey = this.alertNotificationKey.bind(this);
+    this.printNumberOfNotifcations = this.printNumberOfNotifcations.bind(this);
 	}
 
+  deleteThis() {
+    this.props.destory();
+  }
+
+  alertNotificationKey() {
+    alert(this.props.notificationKey);
+  }
+
+  printNumberOfNotifcations() {
+    alert(this.props.parentRef.state.notifications.length)
+  }
+
 	render() {
+
 		return (
 			<div className={"notification-container"}>
-				<div>custom notification box</div>
+				<h3>Custom Notification Wahoo!</h3>
+        <button onClick={this.alertNotificationKey}>show key</button>
+        <button onClick={this.deleteThis}>delete this</button>
+        <button onClick={this.printNumberOfNotifcations}>show notification count</button>
 			</div>
 		);
 	}
 }
 
-class AppComponent extends React.Component {
+class YourApplication extends React.Component {
 	constructor(props){
 		super(props)
 
@@ -139,11 +166,8 @@ class AppComponent extends React.Component {
 	}
 
 	addCustomNotification() {
-		// onClick function
-		let onClickFunc = (key, obj ) => this.refs.notificationContainer.removeByKey(key)
-
 		// Add custom notification to the stack
-		this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox />, null, onClickFunc, { data: "TEST"});
+		this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox customMessage={"HELLO"}/>, null);
 	}
 
 	render() {
@@ -152,6 +176,7 @@ class AppComponent extends React.Component {
 				<h1> Welcome to my fancy website! </h1>
 				<button onClick={this.addNotification}>add</button>
 				<button onClick={this.addCustomNotification}>add custom</button>
+
 				<NotificationContainer 
 					ref="notificationContainer"
 					position={"bottom-right"}

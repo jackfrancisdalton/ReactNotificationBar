@@ -12,22 +12,35 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-
 class CustomNotificationBox  extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			isActive: false,
-			isVisible: false,
-			textContent: "content",
-		}
+    this.deleteThis = this.deleteThis.bind(this);
+    this.alertNotificationKey = this.alertNotificationKey.bind(this);
+    this.printNumberOfNotifcations = this.printNumberOfNotifcations.bind(this);
 	}
 
+  deleteThis() {
+    this.props.destory();
+  }
+
+  alertNotificationKey() {
+    alert(this.props.notificationKey);
+  }
+
+  printNumberOfNotifcations() {
+    alert(this.props.parentRef.state.notifications.length)
+  }
+
 	render() {
+
 		return (
-			<div className={"notification-container"} style={{ padding: "50px", display: "block", background: "blue" }}>
-				<div>BOB</div>
+			<div className={"notification-container"}>
+				<h3>Custom Notification Wahoo!</h3>
+        <button onClick={this.alertNotificationKey}>show key</button>
+        <button onClick={this.deleteThis}>delete this</button>
+        <button onClick={this.printNumberOfNotifcations}>show notification count</button>
 			</div>
 		);
 	}
@@ -52,8 +65,7 @@ class AppComponent extends React.Component {
   }
 
   addCustomNotification() {
-  	let onClickFunc = (key, obj ) => this.refs.notificationContainer.removeByKey(key)
-  	this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox />, 1000);
+  	this.refs.notificationContainer.pushCustomNotification(guid(), <CustomNotificationBox />, null);
   }
 
   render() {

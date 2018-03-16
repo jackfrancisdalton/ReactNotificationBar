@@ -4,7 +4,7 @@ Notification pop-ups are becoming an increasingly common feature in modern websi
 What does `React Notification Handler` give you :
 * Notification timeouts
 * Notification enter and exit animations 
-* Notification Stacking
+* Notification stacking
 * Notification positioning
 
 Additionally this package also comes with a configurable out-of-box notification-box componenet for the case that your application does not require a custom notification box.
@@ -105,7 +105,7 @@ Returns a copy of the current notification stack.
 Function arguments: `getNotifications()`
 
 
-## Implemntation
+## Implementation
 ```javascript
 import React from 'react';
 import NotificationHandler from 'react-notification-handler'

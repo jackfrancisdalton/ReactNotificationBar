@@ -108,7 +108,7 @@ Function arguments: `getNotifications()`
 ## Implemntation
 ```javascript
 import React from 'react';
-import { NotificationContainer } from 'NotificationContainer'
+import NotificationHandler from 'react-notification-handler'
 
 // An arbitrary function for generating unique keys for notifications
 function guid() {
@@ -122,7 +122,7 @@ function guid() {
 
 
 // Custom notification component class
-class CustomNotificationBox  extends React.Component {
+class CustomNotificationBox extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -131,20 +131,20 @@ class CustomNotificationBox  extends React.Component {
 		this.printNumberOfNotifcations = this.printNumberOfNotifcations.bind(this);
 	}
 
-  deleteThis() {
-  	//this.props.destroy is automatically appended as a property 
-    this.props.destory();
-  }
+	deleteThis() {
+		//this.props.destroy is automatically appended as a property 
+		this.props.destory();
+	}
 
-  alertNotificationKey() {
-  	//this.props.notificationKey is automatically appended as a property 
-    alert(this.props.notificationKey);
-  }
+	alertNotificationKey() {
+		//this.props.notificationKey is automatically appended as a property 
+		alert(this.props.notificationKey);
+	}
 
-  printNumberOfNotifcations() {
-  	//this.props.parentRef is automatically appended as a property 
-    alert(this.props.parentRef.state.notifications.length)
-  }
+	printNumberOfNotifcations() {
+		//this.props.parentRef is automatically appended as a property 
+		alert(this.props.parentRef.state.notifications.length)
+	}
 
 	render() {
 		return (

@@ -107,7 +107,7 @@ class NotificationBox  extends React.Component {
 class NotificationHandler extends React.Component {
 	constructor(props) {
 		super(props)
-
+				
 		this.state = { notifications: [] }
 
 		this.pushNotification = this.pushNotification.bind(this);
@@ -308,3 +308,4 @@ class NotificationHandler extends React.Component {
 NotificationHandler.propTypes = Validator
 
 export default NotificationHandler
+

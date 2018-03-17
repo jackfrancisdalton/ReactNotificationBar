@@ -10,7 +10,8 @@ let defaultSettings = require('./defaults');
 let BowerWebpackPlugin = require('bower-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
-  entry: path.join(__dirname, '../src/index'),
+  // entry: path.join(__dirname, '../src/index'),
+  entry: path.join(__dirname, '../src/components/NotificationHandler.js'),
   cache: false,
   devtool: 'sourcemap',
   plugins: [
@@ -38,5 +39,7 @@ config.module.loaders.push({
     [ path.join(__dirname, '/../src') ]
   )
 });
+
+console.log("TSTSDF: ", config)
 
 module.exports = config;

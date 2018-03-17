@@ -1,6 +1,6 @@
 import React from 'react';
 import normalize from 'normalize.css/normalize.css'
-import NotificationHandler from './components/NotificationHandler.jsx'
+import NotificationHandler from './components/NotificationHandler'
 
 function guid() {
   function s4() {

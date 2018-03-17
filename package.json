@@ -1,10 +1,20 @@
 {
   "name": "react-notification-handler",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
   "description": "React package that supplies a React based handling of notification pop ups",
-  "main": "./src/components/NotificationHandler.jsx",
+  "main": "dist/assets/app.js",
+  "homepage": "https://github.com/jackfrancisdalton/ReactNotificationHandler",
+  "keywords": [
+    "React",
+    "ReactJS",
+    "notifications",
+    "notification",
+    "animation",
+    "handler"
+  ],
+  "author": "Jack Francis Dalton",
   "bugs": {
     "url": "https://github.com/jackfrancisdalton/ReactNotificationHandler/issues"
   },
@@ -27,9 +37,6 @@
     "type": "git",
     "url": "https://github.com/jackfrancisdalton/ReactNotificationHandler"
   },
-  "homepage": "https://github.com/jackfrancisdalton/ReactNotificationHandler",
-  "keywords": ["React", "ReactJS", "notifications", "notification", "animation", "handler"],
-  "author": "Jack Francis Dalton",
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",

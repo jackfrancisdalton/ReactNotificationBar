@@ -165,29 +165,38 @@ class YourApplication extends React.Component {
 
 		this.addNotification = this.addNotification.bind(this);
 		this.addCustomNotification = this.addCustomNotification.bind(this);
+		this.deleteNotification = this.deleteNotification.bind(this);
 	}
+
+	deleteNotification() {
+		// Removes the notification at the end of the stack
+		this.refs.notificationHandler.removeFromEnd();
+	}
+
 
 	addNotification() {
 		// onClick function prints the "onClickObject" using alert  
 		let onClickFunc = (key, obj) => alert("notification click with data: " + obj.data)
 
 		// Adds a new generic notification to the stack with a 10 second timeout
-		this.refs.NotificationHandler.pushNotification(guid(), "generic notification message", "mail" , 10000, onClickFunc, { data: "example value" }, true);
+		this.refs.notificationHandler.pushNotification(guid(), "generic notification message", "mail" , 10000, onClickFunc, { data: "example value" }, true);
 	}
 
 	addCustomNotification() {
 		// Add custom notification to the stack that does not timeout
-		this.refs.NotificationHandler.pushCustomNotification(guid(), <CustomNotificationBox customMessage={"HELLO"}/>, null);
+		this.refs.notificationHandler.pushCustomNotification(guid(), <CustomNotificationBox customMessage={"HELLO"}/>, null);
 	}
 
 	render() {
 		return (
 			<div>
 				<h1> Welcome to my fancy website! </h1>
-				<button onClick={this.addNotification}>add</button>
+				<button onClick={this.addNotification}>add generic</button>
 				<button onClick={this.addCustomNotification}>add custom</button>
+				<button onClick={this.deleteNotification}>delete last</button>
+				
 				<NotificationHandler 
-					ref="NotificationHandler"
+					ref="notificationHandler"
 					position={"bottom-right"}
 					addToEnd={true}
 					enterAnimation={"slide-right"}

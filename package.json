@@ -6,6 +6,10 @@
   "description": "React package that supplies a React based handling of notification pop ups",
   "main": "dist/assets/app.js",
   "homepage": "https://github.com/jackfrancisdalton/ReactNotificationHandler",
+  "author": "Jack Francis Dalton",
+  "bugs": {
+    "url": "https://github.com/jackfrancisdalton/ReactNotificationHandler/issues"
+  },
   "keywords": [
     "React",
     "ReactJS",
@@ -14,10 +18,6 @@
     "animation",
     "handler"
   ],
-  "author": "Jack Francis Dalton",
-  "bugs": {
-    "url": "https://github.com/jackfrancisdalton/ReactNotificationHandler/issues"
-  },
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",

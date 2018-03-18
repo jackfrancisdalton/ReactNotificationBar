@@ -6,7 +6,7 @@
 
 // export default NotificationHandler;
 var NotificationHandler = require('./components/NotificationHandler');
-console.log("VALUE: ", NotificationHandler)
+
 module.exports = NotificationHandler
 
 // ReactDOM.render(<App />, document.getElementById('app'));
